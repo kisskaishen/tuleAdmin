@@ -1,0 +1,173 @@
+<template>
+    <div>
+        <bread-crumb :path="this.$route.path"></bread-crumb>
+        <div class="container">
+            <el-form :model="addRuleForm" :rules="addRule" ref="addRuleForm" label-width="120px" class="demo-ruleForm">
+                <el-form-item label="门票名称：" prop="ticketName">
+                    <el-input v-model="addRuleForm.ticketName" placeholder="请输入门票名称"></el-input>
+                </el-form-item>
+                <el-form-item label="景点地址：" prop="address">
+                    <el-input v-model="addRuleForm.address" placeholder="请输入景点地址,如河南、焦作、武陟"></el-input>
+                </el-form-item>
+                <el-form-item label="总票数：" prop="ticketNum">
+                    <el-input v-model.number="addRuleForm.ticketNum" placeholder="请设置门票数量，如100表示100张"></el-input>
+                </el-form-item>
+                <el-form-item label="出发频率：" prop="startNum">
+                    <el-radio-group v-model="addRuleForm.startNum" @change="startNumChange">
+                        <el-radio :label="1" border>每天发团</el-radio>
+                        <el-radio :label="-1" border>固定时间选择</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="出发时间：" prop="startTime" v-if="startTimeShow">
+                    <el-date-picker
+                        v-model="addRuleForm.startTime"
+                        type="date"
+                        placeholder="请选择出发日期"
+                        format="yyyy 年 MM 月 dd 日"
+                        value-format="yyyy-MM-dd"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="景点介绍：" prop="introduce">
+                    <el-input type="textarea" :rows="3" v-model="addRuleForm.introduce"
+                              placeholder="请填写景点介绍"></el-input>
+                </el-form-item>
+                <el-form-item label="图片上传：" prop="dialogImageUrl">
+                    <el-upload
+                        action="#"
+                        list-type="picture-card"
+                        :on-preview="handlePictureCardPreview">
+                        <i class="el-icon-plus"></i>
+                    </el-upload>
+                    <el-dialog :visible.sync="dialogVisible">
+                        <img width="100%" :src="addRuleForm.dialogImageUrl" alt="">
+                    </el-dialog>
+                </el-form-item>
+                <el-form-item label="注意说明：" prop="tip">
+                    <el-input type="textarea" :rows="3" v-model="addRuleForm.tip" placeholder="请填写注意说明（选填）"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="danger" @click="submitForm('addRuleForm')">确认修改</el-button>
+                    <el-button @click="resetForm('addRuleForm')">重置</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+    </div>
+</template>
+
+<script>
+    import BreadCrumb from '@/components/breadCrumb'
+
+    export default {
+        name: "edit-ticket",
+        data() {
+            var checkTicket = (rule, val, cb) => {
+                if (val == '') {
+                    cb(new Error('请设置门票数量！'))
+                } else if (!Number.isInteger(val) || val < 0) {
+                    cb(new Error('票数必须为大于0的数字！'))
+                } else {
+                    cb();
+                }
+            }
+            return {
+                addRuleForm: {
+                    ticketName: '门票名称',
+                    address: '焦作武陟',
+                    ticketNum: '20',
+                    startNum:-1,
+                    startTime:'2018-01-04',
+                    introduce: '这里是介绍',
+                    dialogImageUrl: '',
+                    tip: '',
+                },
+                addRule: {
+                    ticketName: [
+                        {required: true, message: '请输入门票名称', trigger: 'blur'}
+                    ],
+                    address: [
+                        {required: true, message: '请输入景点地址', trigger: 'blur'}
+                    ],
+                    ticketNum: [
+                        {required: true, validator: checkTicket, trigger: 'blur'}
+                    ],
+                    introduce: [
+                        {required: true, message: '请填写景点介绍', trigger: 'blur'}
+                    ]
+                },
+                startTimeShow: this.startNum == '1'?false:true,        // 发团时间选择
+                dialogVisible: false,   // 图片
+            }
+        },
+        components: {BreadCrumb},
+        mounted() {
+
+        },
+        methods: {
+            // 选择出发时间类型
+            startNumChange(e) {
+                if (e == '1') {
+                    this.startTimeShow = false
+                    this.addRuleForm.startTime = ''
+                } else if (e == '-1') {
+                    this.startTimeShow = true
+                }
+            },
+            // 上传图片
+            handlePictureCardPreview() {
+
+            },
+            // 添加提交
+            submitForm(e) {
+                console.log(e)
+                this.$refs[e].validate((valid)=>{
+                    if (valid) {
+                        this.$confirm('修改成功','提示',{
+                            confirmButtonText: '去添加新门票',
+                            cancelButtonText: '去列表页',
+                            type:'success'
+                        })
+                            .then((res)=>{
+                                this.$router.push('/ticket/addTicket')
+                            })
+                            .catch((err)=>{
+                                this.$router.push('/ticket/index')
+                            })
+                    } else {
+                        this.$message.error('修改失败！')
+                    }
+                })
+            },
+            // 重置
+            resetForm(e) {
+                console.log(e)
+                this.$refs[e].resetFields()
+            }
+        }
+    }
+</script>
+
+<style scoped lang="scss">
+    .container {
+        margin-top: 20px;
+        .el-form {
+            .el-input, .el-textarea ,.el-radio-group{
+                width: 400px;
+                float: left;
+                .el-radio {
+                    float: left;
+                }
+            }
+            .el-button {
+                float: left;
+            }
+        }
+    }
+</style>
+<style lang="scss">
+    .el-upload {
+        float: left;
+    }
+
+    .el-upload--picture-card {
+        float: left;
+    }
+</style>

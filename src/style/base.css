@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #f2f2f2;
+}
+i {
+    display: block;
+}
+a {
+    color: #333;
+    text-decoration: none;
+}
+img {
+    display: block;
+    width: 220px;
+    height: 150px;
+    border:1px solid #ccc;
+    border-radius: 10px;
+}
