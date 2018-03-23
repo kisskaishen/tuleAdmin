@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # admin
 
 > qwk
@@ -19,3 +20,7 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+=======
+# tuleAdmin
+途乐后台项目
+>>>>>>> 0e7477780cc6e8641a69662c4f04fa97ad6dfb01
