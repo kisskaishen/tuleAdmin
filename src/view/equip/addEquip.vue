@@ -42,15 +42,15 @@
                     </el-select>
                     <el-tag
                         :key="tag"
-                        v-for="tag in tags1"
+                        v-for="tag in tags"
                         closable
                         :disable-transitions="false"
-                        @close="tag1Close(tag)">{{tag}}}</el-tag>
+                        @close="tagClose(tag)">{{tag}}</el-tag>
                     <el-input
                         class="input-new-tag"
-                        v-if="input1Visible"
-                        v-model="input1Val"
-                        ref="saveTagInput1"
+                        v-if="inputVisible"
+                        v-model="inputVal"
+                        ref="saveTagInput"
                         @keyup.enter.native="saveInputVal"
                         @blur="saveInputVal"></el-input>
                     <el-button v-else class="button-new-tag" @click="showInput">+添加</el-button>
@@ -68,7 +68,11 @@
 
                 <el-form-item label="规格尺寸价格图片：">
                     <el-table>
-                        <el-table-column prop=""></el-table-column>
+                        <el-table-column :label="tags[0]"></el-table-column>
+                        <el-table-column label="当前库存"></el-table-column>
+                        <el-table-column label="设置库存"></el-table-column>
+                        <el-table-column label="价格"></el-table-column>
+                        <el-table-column label="缩略图"></el-table-column>
                     </el-table>
                 </el-form-item>
                 <el-form-item>
@@ -134,8 +138,8 @@
                 startTimeShow: false,        // 发团时间选择
                 dialogVisible: false,        // 图片
                 tags:[],        // 标签数组
-                input1Visible:false,
-                input1Val:'',
+                inputVisible:false,
+                inputVal:'',
             }
         },
         components: {BreadCrumb},
@@ -184,23 +188,24 @@
             },
 
             // 删除添加de标签
-            tag1Close(tag) {
+            tagClose(tag) {
                 this.tags.splice(this.tags.indexOf(tag),1)
             },
             // 显示标签输入框
             showInput() {
-                this.input1Visible = true;
+                this.inputVisible = true;
                 this.$nextTick(_=>{
-                    this.$refs.saveTagInput1.$refs.input.focus()
+                    this.$refs.saveTagInput.$refs.input.focus()
                 })
             },
             // 保存输入内容
             saveInputVal() {
-                if (this.input1Val) {
-                    this.tags.push(this.input1Val)
+                if (this.inputVal) {
+                    this.tags.push(this.inputVal)
                 }
-                this.input1Visible = false
-                this.input1Val = ''
+                console.log(this.tags)
+                this.inputVisible = false
+                this.inputVal = ''
             }
 
         }
@@ -227,6 +232,11 @@
             }
             .el-tag+.el-tag {
                 margin-left: 10px;
+                float: left;
+            }
+            .el-tag {
+                margin-left: 10px;
+                float: left;
             }
             .button-new-tag {
                 margin-left: 10px;

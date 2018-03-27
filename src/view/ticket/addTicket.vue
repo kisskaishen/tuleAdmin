@@ -2,7 +2,7 @@
     <div>
         <bread-crumb :path="this.$route.path"></bread-crumb>
         <div class="container">
-            <el-form :model="addRuleForm" :rules="addRule" ref="addRuleForm" label-width="120px" class="demo-ruleForm">
+            <el-form :model="addRuleForm" :rules="addRule" ref="addRuleForm" label-width="120px" label-position="right" class="demo-ruleForm">
                 <el-form-item label="门票名称：" prop="ticketName">
                     <el-input v-model="addRuleForm.ticketName" placeholder="请输入门票名称"></el-input>
                 </el-form-item>

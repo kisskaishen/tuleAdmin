@@ -64,10 +64,16 @@
                         this.navName2 = '添加装备'
                         break;
                     case 'watchEquip':
-                        this.navName = '查看装备'
+                        this.navName2 = '查看装备'
                         break;
-                    case 'editEquip':
-                        this.navName = '编辑装备'
+                    case 'watchOrder':
+                        this.navName2 = '查看订单'
+                        break;
+                    case 'watchUser':
+                        this.navName2 = '查看用户信息'
+                        break;
+                    case 'editUser':
+                        this.navName2 = '编辑用户信息'
                         break;
                 }
             }

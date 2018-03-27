@@ -2,7 +2,7 @@
     <div>
         <bread-crumb :path="this.$route.path"></bread-crumb>
         <div class="container">
-            <el-form label-width="120px" class="demo-ruleForm">
+            <el-form label-width="120px" label-position="right" class="demo-ruleForm">
                 <el-form-item label="门票名称：">
                     <span>{{ticketInfo.ticketName}}</span>
                 </el-form-item>
@@ -71,9 +71,6 @@
     .container {
         margin-top: 20px;
         .el-form {
-            label {
-                text-align: right;
-            }
             span {
                 float: left;
                 display: block;

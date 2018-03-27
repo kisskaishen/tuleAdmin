@@ -1,7 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+const Login = r => require.ensure([], () => r(require('@/components/login')), 'Login')
+
+const Home = r => require.ensure([], () => r(require('@/components/Home')), 'Home')
+
 const IndexIndex = r => require.ensure([], () => r(require('@/view/index/index')), 'IndexIndex')
+
 const TicketIndex = r => require.ensure([], () => r(require('@/view/ticket/index')), 'TicketIndex')
 const AddTicket = r => require.ensure([], () => r(require('@/view/ticket/addTicket')), 'AddTicket')
 const EditTicket = r => require.ensure([], () => r(require('@/view/ticket/editTicket')), 'EditTicket')
@@ -13,8 +18,11 @@ const EditEquip = r => require.ensure([], () => r(require('@/view/equip/editEqui
 const WatchEquip= r => require.ensure([], () => r(require('@/view/equip/watchEquip')), 'WatchEquip')
 
 const OrderIndex = r => require.ensure([], () => r(require('@/view/order/index')), 'OrderIndex')
-const UserIndex = r => require.ensure([], () => r(require('@/view/user/index')), 'UserIndex')
+const WatchOrder = r => require.ensure([], () => r(require('@/view/order/watchOrder')), 'WatchOrder')
 
+const UserIndex = r => require.ensure([], () => r(require('@/view/user/index')), 'UserIndex')
+const EditUser = r => require.ensure([], () => r(require('@/view/user/editUser')), 'EditUser')
+const WatchUser = r => require.ensure([], () => r(require('@/view/user/watchUser')), 'WatchUser')
 
 Vue.use(Router)
 
@@ -23,78 +31,108 @@ export default new Router({
     routes: [
         {
             path: '/',
-            component: IndexIndex,
+            name:'home',
+            redirect:'/index/index',
+            component: Home,
             children: [
                 {
-                    path: '/index/index',
-                    component: IndexIndex
-                }
+                    path: '/index',
+                    component: IndexIndex,
+                    children:[
+                        {
+                            path: '/index/index',
+                            component: IndexIndex,
+                        }
+                    ]
+                },
+
+
+                {
+                    path: '/ticket',
+                    component: TicketIndex,
+                    children: [
+                        {
+                            path: '/ticket/index',
+                            component: TicketIndex
+                        }
+                    ]
+                },
+                {
+                    path: '/ticket/addTicket',
+                    component: AddTicket,
+                },
+                {
+                    path: '/ticket/editTicket',
+                    component: EditTicket,
+                },
+                {
+                    path: '/ticket/watchTicket',
+                    component: WatchTicket,
+                },
+                {
+                    path: '/equip',
+                    component: EquipIndex,
+                    children: [
+                        {
+                            path: '/equip/index',
+                            component: EquipIndex
+                        }
+                    ]
+                },
+                {
+                    path: '/equip/addEquip',
+                    component: AddEquip,
+                },
+                {
+                    path: '/equip/editEquip',
+                    component: EditEquip,
+                },
+                {
+                    path: '/equip/watchEquip',
+                    component: WatchEquip,
+                },
+
+                {
+                    path: '/order',
+                    component: OrderIndex,
+                    children: [
+                        {
+                            path: '/order/index',
+                            name: 'index',
+                            component: OrderIndex
+                        }
+                    ]
+                },
+                {
+                    path: '/order/watchOrder',
+                    component: WatchOrder,
+                },
+                {
+                    path: '/user',
+                    component: UserIndex,
+                    children: [
+                        {
+                            path: '/user/index',
+                            component: UserIndex
+                        }
+                    ]
+                },
+                {
+                    path: '/user/editUser',
+                    component: WatchOrder,
+                },
+                {
+                    path: '/user/watchOrder',
+                    component: WatchOrder,
+                },
             ]
         },
         {
-            path: '/ticket',
-            component: TicketIndex,
-            children: [
-                {
-                    path: '/ticket/index',
-                    component: TicketIndex
-                }
-            ]
-        },
-        {
-            path: '/ticket/addTicket',
-            component: AddTicket,
-        },
-        {
-            path: '/ticket/editTicket',
-            component: EditTicket,
-        },
-        {
-            path: '/ticket/watchTicket',
-            component: WatchTicket,
-        },
-        {
-            path: '/equip',
-            component: EquipIndex,
-            children: [
-                {
-                    path: '/equip/index',
-                    component: EquipIndex
-                }
-            ]
-        },
-        {
-            path: '/equip/addEquip',
-            component: AddEquip,
-        },
-        {
-            path: '/equip/editEquip',
-            component: EditEquip,
-        },
-        {
-            path: '/equip/watchEquip',
-            component: WatchEquip,
-        },
-        {
-            path: '/order',
-            component: OrderIndex,
-            children: [
-                {
-                    path: '/order/index',
-                    name: 'index',
-                    component: OrderIndex
-                }
-            ]
-        },
-        {
-            path: '/user',
-            component: UserIndex,
-            children: [
-                {
-                    path: '/user/index',
-                    component: UserIndex
-                }
-            ]
+            path: '/login',
+            name: 'login',
+            component: Login
         }
+
     ]
 })
+
