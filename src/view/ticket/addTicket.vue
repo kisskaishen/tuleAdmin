@@ -2,12 +2,27 @@
     <div>
         <bread-crumb :path="this.$route.path"></bread-crumb>
         <div class="container">
-            <el-form :model="addRuleForm" :rules="addRule" ref="addRuleForm" label-width="120px" label-position="right" class="demo-ruleForm">
+            <el-form :model="addRuleForm" :rules="addRule" ref="addRuleForm" label-width="140px" label-position="right" class="demo-ruleForm">
                 <el-form-item label="门票名称：" prop="ticketName">
                     <el-input v-model="addRuleForm.ticketName" placeholder="请输入门票名称"></el-input>
                 </el-form-item>
                 <el-form-item label="景点地址：" prop="address">
                     <el-input v-model="addRuleForm.address" placeholder="请输入景点地址,如河南、焦作、武陟"></el-input>
+                </el-form-item>
+                <el-form-item label="票价：" prop="ticketPrice">
+                    <el-input v-model.number="addRuleForm.ticketPrice" placeholder="请设置门票价格"></el-input>
+                </el-form-item>
+                <el-form-item label="是否为热销产品：" prop="hotTicket">
+                    <el-radio-group v-model="addRuleForm.hotTicket" @change="hotTicketChange">
+                        <el-radio :label="1" border>是</el-radio>
+                        <el-radio :label="-1" border>否</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="是否为特卖产品：" prop="cheapTicket">
+                    <el-radio-group v-model="addRuleForm.cheapTicket" @change="cheapTicketChange">
+                        <el-radio :label="1" border>是</el-radio>
+                        <el-radio :label="-1" border>否</el-radio>
+                    </el-radio-group>
                 </el-form-item>
                 <el-form-item label="总票数：" prop="ticketNum">
                     <el-input v-model.number="addRuleForm.ticketNum" placeholder="请设置门票数量，如100表示100张"></el-input>
@@ -67,11 +82,23 @@
                 } else {
                     cb();
                 }
-            }
+            };
+            var checkTicketMoney = (rule, val, cb) => {
+                if (val == '') {
+                    cb(new Error('请设置门票价格！'))
+                } else if (!Number.isInteger(val) || val < 0) {
+                    cb(new Error('价格必须为大于0的整数！'))
+                } else {
+                    cb();
+                }
+            };
             return {
                 addRuleForm: {
                     ticketName: '',
                     address: '',
+                    ticketPrice:'',
+                    hotTicket:-1,
+                    cheapTicket:-1,
                     ticketNum: '',
                     startNum: 1,
                     startTime: '',
@@ -85,6 +112,9 @@
                     ],
                     address: [
                         {required: true, message: '请输入景点地址', trigger: 'blur'}
+                    ],
+                    ticketPrice:[
+                        {required: true, validator: checkTicketMoney, trigger: 'blur'}
                     ],
                     ticketNum: [
                         {required: true, validator: checkTicket, trigger: 'blur'}
@@ -105,6 +135,14 @@
 
         },
         methods: {
+            // 设置是否为热销产品
+            hotTicketChange() {
+
+            },
+            // 是否为特卖产品
+            cheapTicketChange() {
+
+            },
             // 选择出发时间类型
             startNumChange(e) {
                 if (e == '1') {

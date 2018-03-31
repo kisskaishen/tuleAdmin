@@ -25,56 +25,91 @@
                 <el-form-item label="注意说明：" prop="tip">
                     <el-input type="textarea" :rows="3" v-model="addRuleForm.tip" placeholder="请填写注意说明（选填）"></el-input>
                 </el-form-item>
+                <!--
+                                <el-form-item label="设置商品规格：" prop="spec">
+                                    <el-radio-group v-model="addRuleForm.spec" @change="specChoose">
+                                        <el-radio label="1" border>单规格</el-radio>
+                                        <el-radio label="2" border>双规格</el-radio>
+                                    </el-radio-group>
+                                </el-form-item>
+                                <el-form-item prop="spec1">
+                                    <el-select v-model="addRuleForm.spec1" @change="spec1Choose">
+                                        <el-option
+                                            v-for="item in specList"
+                                            :key="item.id"
+                                            :label="item.label"
+                                            :value="item.label"></el-option>
+                                    </el-select>
+                                    <el-tag
+                                        :key="tag"
+                                        v-for="tag in tags1"
+                                        closable
+                                        :disable-transitions="false"
+                                        @close="tagClose1(tag)">{{tag}}
+                                    </el-tag>
+                                    <el-input
+                                        class="input-new-tag"
+                                        v-if="inputVisible1"
+                                        v-model="inputVal1"
+                                        ref="saveTagInput1"
+                                        @keyup.enter.native="saveInputVal1"
+                                        @blur="saveInputVal1"></el-input>
+                                    <el-button v-else class="button-new-tag" @click="showInput1">+添加</el-button>
+                                </el-form-item>
 
-                <el-form-item label="设置商品规格：" prop="spec">
-                    <el-radio-group v-model="addRuleForm.spec">
-                        <el-radio :label="1" border>单规格</el-radio>
-                        <el-radio :label="2" border>双规格</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item prop="spec1">
-                    <el-select v-model="addRuleForm.spec1">
-                        <el-option
-                            v-for="item in specList"
-                            :key="item.id"
-                            :label="item.label"
-                            :value="item.id"></el-option>
-                    </el-select>
-                    <el-tag
-                        :key="tag"
-                        v-for="tag in tags"
-                        closable
-                        :disable-transitions="false"
-                        @close="tagClose(tag)">{{tag}}</el-tag>
-                    <el-input
-                        class="input-new-tag"
-                        v-if="inputVisible"
-                        v-model="inputVal"
-                        ref="saveTagInput"
-                        @keyup.enter.native="saveInputVal"
-                        @blur="saveInputVal"></el-input>
-                    <el-button v-else class="button-new-tag" @click="showInput">+添加</el-button>
-                </el-form-item>
+                                <el-form-item prop="spec2" v-if="this.addRuleForm.spec == '2'">
+                                    <el-select v-model="addRuleForm.spec2" @change="spec2Choose">
+                                        <el-option
+                                            v-for="item in specList"
+                                            :key="item.id"
+                                            :label="item.label"
+                                            :value="item.label"></el-option>
+                                    </el-select>
+                                    <el-tag
+                                        :key="tag"
+                                        v-for="tag in tags2"
+                                        closable
+                                        :disable-transitions="false"
+                                        @close="tagClose2(tag)">{{tag}}
+                                    </el-tag>
+                                    <el-input
+                                        class="input-new-tag"
+                                        v-if="inputVisible2"
+                                        v-model="inputVal2"
+                                        ref="saveTagInput2"
+                                        @keyup.enter.native="saveInputVal2"
+                                        @blur="saveInputVal2"></el-input>
+                                    <el-button v-else class="button-new-tag" @click="showInput2">+添加</el-button>
+                                </el-form-item>
 
-                <el-form-item prop="spec2">
-                    <el-select v-model="addRuleForm.spec2">
-                        <el-option
-                            v-for="item in specList"
-                            :key="item.id"
-                            :label="item.label"
-                            :value="item.id"></el-option>
-                    </el-select>
-                </el-form-item>
 
-                <el-form-item label="规格尺寸价格图片：">
-                    <el-table>
-                        <el-table-column :label="tags[0]"></el-table-column>
-                        <el-table-column label="当前库存"></el-table-column>
-                        <el-table-column label="设置库存"></el-table-column>
-                        <el-table-column label="价格"></el-table-column>
-                        <el-table-column label="缩略图"></el-table-column>
-                    </el-table>
-                </el-form-item>
+                                <el-form-item label="规格尺寸价格图片：">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <td v-if="this.addRuleForm.spec2">{{addRuleForm.spec2}}</td>
+                                            <td v-if="this.addRuleForm.spec1">{{addRuleForm.spec1}}</td>
+                                            <td>当前库存</td>
+                                            <td>设置库存</td>
+                                            <td>价格</td>
+                                            <td>SKU缩略图</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="item in tbodyes">
+                                            <td v-if="addRuleForm.spec1">{{item.spec1}}</td>
+                                            <td><span>{{item.currentStorage}}</span></td>
+                                            <td>
+                                                <el-input v-model="item.setStorage" size="small" placeholder="设置当前库存"></el-input>
+                                            </td>
+                                            <td>
+                                                <el-input v-model="item.price" size="small" placeholder="设置价格"></el-input>
+                                            </td>
+                                            <td>1111</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </el-form-item>-->
                 <el-form-item>
                     <el-button type="danger" @click="submitForm('addRuleForm')">添加</el-button>
                     <el-button @click="resetForm('addRuleForm')">重置</el-button>
@@ -90,15 +125,6 @@
     export default {
         name: "add-equip",
         data() {
-            var checkTicket = (rule, val, cb) => {
-                if (val == '') {
-                    cb(new Error('请设置库存数量！'))
-                } else if (!Number.isInteger(val) || val < 0) {
-                    cb(new Error('库存必须为大于0的数字！'))
-                } else {
-                    cb();
-                }
-            }
             return {
                 addRuleForm: {
                     ticketName: '',
@@ -109,22 +135,22 @@
                     introduce: '',
                     dialogImageUrl: '',
                     tip: '',
-                    spec:2,
-                    spec1:'',
-                    spec2:'',
+                    spec: '1',
+                    spec1: '',
+                    spec2: '',
                 },
-                specList:[
+                specList: [
                     {
-                        id:'1',
-                        label:'规格1'
+                        id: '1',
+                        label: '规格1'
                     },
                     {
-                        id:'2',
-                        label:'规格2'
+                        id: '2',
+                        label: '规格2'
                     },
                     {
-                        id:'3',
-                        label:'规格3'
+                        id: '3',
+                        label: '规格3'
                     }
                 ],
                 addRule: {
@@ -135,11 +161,15 @@
                         {required: true, message: '请填写景点介绍', trigger: 'blur'}
                     ]
                 },
-                startTimeShow: false,        // 发团时间选择
                 dialogVisible: false,        // 图片
-                tags:[],        // 标签数组
-                inputVisible:false,
-                inputVal:'',
+                tags1: [],        // 标签数组
+                inputVisible1: false,
+                inputVal1: '',
+                tags2: [],        // 标签数组
+                inputVisible2: false,
+                inputVal2: '',
+
+                tbodyes: [],
             }
         },
         components: {BreadCrumb},
@@ -147,65 +177,108 @@
 
         },
         methods: {
-            // 选择出发时间类型
-            startNumChange(e) {
-                if (e == '1') {
-                    this.startTimeShow = false
-                    this.addRuleForm.startTime = ''
-                } else if (e == '-1') {
-                    this.startTimeShow = true
-                }
-            },
             // 上传图片
             handlePictureCardPreview() {
 
             },
-            // 添加提交
-            submitForm(e) {
-                console.log(e)
-                this.$refs[e].validate((valid) => {
-                    if (valid) {
-                        this.$confirm('添加成功', '提示', {
-                            confirmButtonText: '继续添加',
-                            cancelButtonText: '去列表页',
-                            type: 'success'
-                        })
-                            .then((res) => {
-                                this.$refs[e].resetFields()
-                            })
-                            .catch((err) => {
-                                this.$router.push('/ticket/index')
-                            })
-                    } else {
-                        this.$message.error('添加失败！')
+            // 规格种类选择，是一种还是两种规格
+            specChoose(e) {
+                this.$alert('商品规格会清空', '提示', {
+                    confirmButtonText: '确认',
+                    callback: action => {
+                        this.addRuleForm.spec1 = ''
+                        this.addRuleForm.spec2 = ''
+                        this.tbodyes = []
                     }
                 })
             },
-            // 重置
-            resetForm(e) {
-                console.log(e)
-                this.$refs[e].resetFields()
+            // spec1选择
+            spec1Choose(val) {
+                if (this.addRuleForm.spec1 == this.addRuleForm.spec2) {
+                    this.$message.error('规格1与规格2不能相同！')
+                    this.addRuleForm.spec1 == ''
+                } else {
+                    this.addRuleForm.spec1 = val
+
+                }
+
+            },
+            // spec2选择
+            spec2Choose(val) {
+                if (this.addRuleForm.spec2 == this.addRuleForm.spec1) {
+                    this.$message.error('规格1与规格2不能相同！')
+                    this.addRuleForm.spec2 == ''
+                } else {
+                    this.addRuleForm.spec2 = val
+                }
             },
 
             // 删除添加de标签
-            tagClose(tag) {
-                this.tags.splice(this.tags.indexOf(tag),1)
+            tagClose1(tag) {
+                this.tags1.splice(this.tags1.indexOf(tag), 1)
             },
             // 显示标签输入框
-            showInput() {
-                this.inputVisible = true;
-                this.$nextTick(_=>{
-                    this.$refs.saveTagInput.$refs.input.focus()
-                })
+            showInput1() {
+                if (this.addRuleForm.spec1) {
+                    this.inputVisible1 = true;
+                    this.$nextTick(_ => {
+                        this.$refs.saveTagInput1.$refs.input.focus()
+                    })
+                } else {
+                    this.$message.warning('请先选择规格1')
+                }
+
             },
             // 保存输入内容
-            saveInputVal() {
-                if (this.inputVal) {
-                    this.tags.push(this.inputVal)
+            saveInputVal1() {
+                let list1 = {}
+                if (this.inputVal1) {
+                    this.tags1.push(this.inputVal1)
                 }
-                console.log(this.tags)
-                this.inputVisible = false
-                this.inputVal = ''
+                // console.log(this.tags1)
+                this.inputVisible1 = false
+                this.inputVal1 = ''
+
+                for (let i = 0; i < this.tags1.length; i++) {
+                    console.log(this.tags1.length)
+                    list1 = {
+                        'spec1': this.tags1[i],
+                        'currentStorage': '0',
+                        'setStorage': '',
+                        'price': '',
+                    }
+                    console.log(list1)
+
+                }
+                // console.log(list1)
+                this.tbodyes.push(list1)
+
+                console.log(this.tbodyes)
+
+            },
+            // 删除添加de标签
+            tagClose2(tag) {
+                this.tags2.splice(this.tags2.indexOf(tag), 1)
+            },
+            // 显示标签输入框
+            showInput2() {
+                if (this.addRuleForm.spec2) {
+                    this.inputVisible2 = true;
+                    this.$nextTick(_ => {
+                        this.$refs.saveTagInput2.$refs.input.focus()
+                    })
+                } else {
+                    this.$message.warning('请先选择规格2')
+                }
+
+            },
+            // 保存输入内容
+            saveInputVal2() {
+                if (this.inputVal2) {
+                    this.tags2.push(this.inputVal2)
+                }
+                this.inputVisible2 = false
+                this.inputVal2 = ''
             }
 
         }
@@ -230,7 +303,7 @@
             .el-button {
                 float: left;
             }
-            .el-tag+.el-tag {
+            .el-tag + .el-tag {
                 margin-left: 10px;
                 float: left;
             }
@@ -245,6 +318,24 @@
                 width: 100px;
                 margin-left: 10px;
                 vertical-align: middle;
+            }
+            table {
+                width: 100%;
+                thead {
+                    background-color: #ccc;
+                    tr {
+                        td {
+                            width: 160px;
+                        }
+                    }
+                }
+                tr {
+                    td {
+                        .el-input {
+                            width: 160px;
+                        }
+                    }
+                }
             }
         }
     }
