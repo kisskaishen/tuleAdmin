@@ -2,22 +2,32 @@
     <div>
         <bread-crumb :path="this.$route.path"></bread-crumb>
         <div class="container">
-            <el-form inline label-position="right" :model="searchForm" label-width="80px" class="demo-form-inline" style="border-bottom: 0px;">
+            <el-form inline label-position="right" :model="searchForm" label-width="80px" class="demo-form-inline"
+                     style="border-bottom: 0px;">
                 <el-form-item label="订单号">
                     <el-input v-model="searchForm.orderNum" size="small" clearable placeholder="订单号查询"></el-input>
                 </el-form-item>
 
-                <el-form-item label="订单时间">
+                <el-form-item label="下单时间">
                     <el-date-picker
                         v-model="searchForm.orderTime"
                         type="date"
                         size="small"
                         placeholder="下单时间查询"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="订单分类">
-                    <el-select v-model="searchForm.orderType" size="small" placeholder="订单分类">
+                <!--<el-form-item label="订单分类">-->
+                <!--<el-select v-model="searchForm.orderType" size="small" placeholder="订单分类">-->
+                <!--<el-option-->
+                <!--v-for="item in searchForm.orderTypes"-->
+                <!--:key="item.id"-->
+                <!--:label="item.label"-->
+                <!--:value="item.id"></el-option>-->
+                <!--</el-select>-->
+                <!--</el-form-item>-->
+                <el-form-item label="订单状态">
+                    <el-select v-model="searchForm.orderStatus" size="small" placeholder="订单状态">
                         <el-option
-                            v-for="item in searchForm.orderTypes"
+                            v-for="item in searchForm.orderStatuses"
                             :key="item.id"
                             :label="item.label"
                             :value="item.id"></el-option>
@@ -30,18 +40,10 @@
                 <el-form-item label="购买人">
                     <el-input v-model="searchForm.orderPeople" size="small" clearable placeholder="购买人姓名查询"></el-input>
                 </el-form-item>
-                <el-form-item label="手机号" >
+                <el-form-item label="手机号">
                     <el-input v-model="searchForm.orderTel" size="small" clearable placeholder="购买人手机号查询"></el-input>
                 </el-form-item>
-                <el-form-item label="订单状态">
-                    <el-select v-model="searchForm.orderStatus" size="small" placeholder="订单状态">
-                        <el-option
-                            v-for="item in searchForm.orderStatuses"
-                            :key="item.id"
-                            :label="item.label"
-                            :value="item.id"></el-option>
-                    </el-select>
-                </el-form-item>
+
                 <el-form-item>
                     <el-button size="small" type="danger">查询</el-button>
                 </el-form-item>
@@ -58,7 +60,15 @@
                         <el-button type="text">{{scope.row.orderTel}}</el-button>
                     </template>
                 </el-table-column>
-                <el-table-column header-align="center" align="center" prop="orderType" label="订单分类"></el-table-column>
+                <el-table-column header-align="center" align="center" width="100px"
+                                 label="商品名称">
+                    <template slot-scope="scope">
+                        <p>{{scope.row.ticketName}}</p>
+                        <p>x{{scope.row.ticketNum}}</p>
+                    </template>
+                </el-table-column>
+                <el-table-column header-align="center" align="center" width="100px" prop="payMoney"
+                                 label="支付金额"></el-table-column>
                 <el-table-column header-align="center" align="center" width="200px"
                                  label="下单/支付时间">
                     <template slot-scope="scope">
@@ -66,8 +76,7 @@
                         <p>支付：{{scope.row.payTime}}</p>
                     </template>
                 </el-table-column>
-                <el-table-column header-align="center" align="center" width="100px" prop="payMoney"
-                                 label="支付金额"></el-table-column>
+
                 <el-table-column header-align="center" align="center" width="100px" prop="payStatus"
                                  label="订单状态"></el-table-column>
                 <el-table-column header-align="center" align="center" width="120px" label="操作">
@@ -95,21 +104,6 @@
                     orderTel: '',
                     orderTime: '',
                     payTime: '',
-                    orderTypes: [
-                        {
-                            id: '0',
-                            label: '全部订单'
-                        },
-                        {
-                            id: '1',
-                            label: '门票景区订单'
-                        },
-                        {
-                            id: '2',
-                            label: '装备订单'
-                        }
-                    ],
-                    orderType: '0',
                     orderStatuses: [
                         {
                             id: '0',
@@ -132,7 +126,8 @@
                         orderNum: '1231241434',
                         orderPeople: '秦文凯',
                         orderTel: '13798238693',
-                        orderType: '门票装备',
+                        ticketName: '云台山门票',
+                        ticketNum:'1',
                         orderTime: '2018-03-13 12:00:00',
                         payTime: '2018-03-13 12:00:00',
                         payMoney: '20',
@@ -175,7 +170,7 @@
             display: flex;
             justify-content: flex-start;
             border-bottom: 1px solid #ccc;
-            .el-input,.el-select {
+            .el-input, .el-select {
                 width: 140px;
             }
             .el-date-picker {

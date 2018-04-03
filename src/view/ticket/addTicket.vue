@@ -6,7 +6,10 @@
                 <el-form-item label="门票名称：" prop="ticketName">
                     <el-input v-model="addRuleForm.ticketName" placeholder="请输入门票名称"></el-input>
                 </el-form-item>
-                <el-form-item label="景点地址：" prop="address">
+                <el-form-item label="景区名称：" prop="scenicName">
+                    <el-input v-model="addRuleForm.scenicName" placeholder="请输入景区名称"></el-input>
+                </el-form-item>
+                <el-form-item label="景点所在地：" prop="address">
                     <el-input v-model="addRuleForm.address" placeholder="请输入景点地址,如河南、焦作、武陟"></el-input>
                 </el-form-item>
                 <el-form-item label="票价：" prop="ticketPrice">
@@ -23,6 +26,9 @@
                         <el-radio :label="1" border>是</el-radio>
                         <el-radio :label="-1" border>否</el-radio>
                     </el-radio-group>
+                </el-form-item>
+                <el-form-item label="特卖价格：" prop="cheapPrice" v-if="addRuleForm.cheapTicket == '1'">
+                    <el-input v-model.number="addRuleForm.cheapPrice" placeholder="请设置特卖门票价格"></el-input>
                 </el-form-item>
                 <el-form-item label="总票数：" prop="ticketNum">
                     <el-input v-model.number="addRuleForm.ticketNum" placeholder="请设置门票数量，如100表示100张"></el-input>
@@ -95,10 +101,12 @@
             return {
                 addRuleForm: {
                     ticketName: '',
+                    scenicName:'',
                     address: '',
                     ticketPrice:'',
                     hotTicket:-1,
                     cheapTicket:-1,
+                    cheapPrice:'',
                     ticketNum: '',
                     startNum: 1,
                     startTime: '',
@@ -110,6 +118,9 @@
                     ticketName: [
                         {required: true, message: '请输入门票名称', trigger: 'blur'}
                     ],
+                    scenicName:[
+                        {required: true, message: '请输入景区名称', trigger: 'blur'}
+                    ],
                     address: [
                         {required: true, message: '请输入景点地址', trigger: 'blur'}
                     ],
@@ -118,6 +129,9 @@
                     ],
                     ticketNum: [
                         {required: true, validator: checkTicket, trigger: 'blur'}
+                    ],
+                    cheapPrice:[
+                        {required: true, validator: checkTicketMoney, trigger: 'blur'}
                     ],
                     // startTime: [
                     //     { type: 'date', required: true, message: '请设置出发时间', trigger: 'change' }

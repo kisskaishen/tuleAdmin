@@ -28,12 +28,6 @@
                       :default-sort="{prop:'startTime'}">
                 <el-table-column header-align="center" align="center" prop="equipName" label="装备名称"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="equipUse" label="装备用途"></el-table-column>
-                <el-table-column header-align="center" align="center" width="160px" prop="equipSize"
-                                 label="装备规格尺寸"></el-table-column>
-                <el-table-column header-align="center" align="center" width="100px" prop="equipNum"
-                                 label="总库存"></el-table-column>
-                <el-table-column header-align="center" align="center" width="120px" prop="restNum" label="剩余库存"
-                                 sortable></el-table-column>
                 <el-table-column header-align="center" align="center" width="80px" prop="equipPrice"
                                  label="价格"></el-table-column>
                 <el-table-column header-align="center" align="center" width="60px" label="操作">

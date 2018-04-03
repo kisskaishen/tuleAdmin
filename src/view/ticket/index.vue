@@ -6,7 +6,7 @@
                 <el-form-item label="景点名称">
                     <el-input v-model="searchForm.ticketName" size="small" clearable placeholder="请输入景点名称"></el-input>
                 </el-form-item>
-                <el-form-item label="城市名称">
+                <el-form-item label="所在地">
                     <el-input v-model="searchForm.cityName" size="small" clearable placeholder="请输入城市名称"></el-input>
                 </el-form-item>
                 <el-form-item label="出发时间">
@@ -30,12 +30,13 @@
             </el-form>
             <el-table :data="ticketData" style="width: 100%;" size="medium" highlight-current-row :default-sort="{prop:'startTime'}">
                 <el-table-column header-align="center" align="center" prop="startTime" label="出发日期" sortable></el-table-column>
-                <el-table-column header-align="center" align="center" prop="ticketName" label="景点名称"></el-table-column>
+                <el-table-column header-align="center" align="center" prop="ticketName" label="门票名称"></el-table-column>
+                <el-table-column header-align="center" align="center" width="80px" prop="ticketPrice" label="票价"></el-table-column>
+                <el-table-column header-align="center" align="center" prop="scenicName" label="景点名称"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="content" label="包含事项"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="cityName" label="所在地区"></el-table-column>
                 <el-table-column header-align="center" align="center" width="100px" prop="ticketNum" label="总票数"></el-table-column>
                 <el-table-column header-align="center" align="center" width="120px" prop="restTicket" label="剩余票数" sortable></el-table-column>
-                <el-table-column header-align="center" align="center" width="80px" prop="ticketPrice" label="票价"></el-table-column>
                 <el-table-column header-align="center" align="center" width="60px" label="操作">
                     <template slot-scope="scope">
                         <el-button size="small" plain @click="seeTicket(scope)">查看</el-button>
@@ -66,6 +67,7 @@
                         id:'1',
                         startTime:'2018-04-07',
                         ticketName:'云台山景区',
+                        scenicName:'云台山的门票',
                         content:'云台山基本上所有的景点',
                         cityName:'焦作修武',
                         ticketNum:'40',

@@ -3,12 +3,18 @@
         <bread-crumb :path="this.$route.path"></bread-crumb>
         <div class="container">
             <el-form inline label-position="right" :model="searchForm" label-width="80px" class="demo-form-inline">
-                <el-form-item label="用户姓名">
+                <el-form-item>
+                    <el-select v-model="searchForm.userType" size="small">
+                        <el-option
+                            v-for="item in searchForm.userTypes"
+                            :key="item.type"
+                            :label="item.name"
+                            :value="item.type"></el-option>
+                    </el-select>
                     <el-input v-model="searchForm.userName" size="small" clearable placeholder="用户姓名查询"></el-input>
+
                 </el-form-item>
-                <el-form-item label="手机号">
-                    <el-input v-model="searchForm.userTel" size="small" clearable placeholder="用户手机号查询"></el-input>
-                </el-form-item>
+
                 <el-form-item>
                     <el-button size="small" type="danger">查询</el-button>
                 </el-form-item>
@@ -18,22 +24,26 @@
 
             </el-form>
             <el-table :data="userData" style="width: 100%;" size="medium" highlight-current-row>
-                <el-table-column header-align="center" align="center" prop="userName" width="120px" label="用户姓名"></el-table-column>
-                <el-table-column header-align="center" align="center" prop="userTel" label="用户手机号"></el-table-column>
-                <el-table-column header-align="center" align="center" prop="userIdentity" label="用户身份证"></el-table-column>
-                <el-table-column header-align="center" align="center" prop="nickName" label="微信名称"></el-table-column>
-                <el-table-column header-align="center" align="center" label="微信头像">
+                <el-table-column header-align="center" align="center" width="120px" label="微信头像">
                     <template slot-scope="scope">
                         <img :src="scope.row.headerImg" :alt="scope.row.nickName">
                     </template>
                 </el-table-column>
-                <el-table-column header-align="center" align="center" width="140px" label="操作">
+                <el-table-column header-align="center" align="center" prop="userAccount" label="用户账号"></el-table-column>
+
+                <el-table-column header-align="center" align="center" label="用户信息">
                     <template slot-scope="scope">
-                        <el-button size="small" plain @click="seeUser(scope)">查看</el-button>
-                        <el-button type="primary" size="small" plain @click="editUser(scope)">编辑</el-button>
-                        <el-button type="danger" size="small" plain @click="deleteUser(scope)">删除</el-button>
+                        <p>{{scope.row.userName}}</p>
+                        <p>{{scope.row.userTel}}</p>
                     </template>
                 </el-table-column>
+                <el-table-column header-align="center" align="center" prop="nickName" label="昵称"></el-table-column>
+                <el-table-column header-align="center" align="center" prop="orderNum" label="订单总数">
+                    <template slot-scope="scope">
+                        <router-link to="/order/index">{{scope.row.orderNum}}</router-link>
+                    </template>
+                </el-table-column>
+
             </el-table>
 
         </div>
@@ -50,13 +60,29 @@
                 searchForm: {
                     userName: '',
                     userTel: '',
+                    userTypes:[
+                        {
+                            type:'1',
+                            name:'用户账号'
+                        },
+                        {
+                            type:'2',
+                            name:'用户姓名'
+                        },
+                        {
+                            type:'3',
+                            name:'用户手机号'
+                        },
+                    ],
+                    userType:'1'
                 },
                 userData: [
                     {
                         id: '1',
+                        userAccount:'tl2000',
                         userName: 'qwk',
                         userTel: '13798238693',
-                        userIdentity:'410823199510240078',
+                        orderNum:'10',
                         nickName: '0的离心率',
                         headerImg: '',
 
