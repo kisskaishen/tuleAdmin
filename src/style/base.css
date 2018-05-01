@@ -19,3 +19,18 @@ img {
     border:1px solid #ccc;
     border-radius: 10px;
 }
+.primary {
+    color: #409eff;
+}
+.danger {
+    color: #f56c6c;
+}
+.success {
+    color: #67c23a;
+}
+.warning {
+    color: #e6a23c;
+}
+.info {
+    color: #909399;
+}

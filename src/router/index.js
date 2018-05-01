@@ -14,6 +14,7 @@ const WatchTicket = r => require.ensure([], () => r(require('@/view/ticket/watch
 
 const EquipIndex = r => require.ensure([], () => r(require('@/view/equip/index')), 'EquipIndex')
 const AddEquip = r => require.ensure([], () => r(require('@/view/equip/addEquip')), 'AddEquip')
+const AddEquipType = r => require.ensure([], () => r(require('@/view/equip/addEquipType')), 'AddEquipType')
 const EditEquip = r => require.ensure([], () => r(require('@/view/equip/editEquip')), 'EditEquip')
 const WatchEquip= r => require.ensure([], () => r(require('@/view/equip/watchEquip')), 'WatchEquip')
 
@@ -82,6 +83,10 @@ export default new Router({
                 {
                     path: '/equip/addEquip',
                     component: AddEquip,
+                },
+                {
+                    path: '/equip/addEquipType',
+                    component: AddEquipType,
                 },
                 {
                     path: '/equip/editEquip',

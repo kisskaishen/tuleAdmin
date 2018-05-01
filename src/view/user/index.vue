@@ -11,7 +11,7 @@
                             :label="item.name"
                             :value="item.type"></el-option>
                     </el-select>
-                    <el-input v-model="searchForm.userName" size="small" clearable placeholder="用户姓名查询"></el-input>
+                    <el-input v-model="searchForm.userName" size="small" clearable placeholder="输入查询"></el-input>
 
                 </el-form-item>
 

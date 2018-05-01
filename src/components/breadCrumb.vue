@@ -63,6 +63,9 @@
                     case 'addEquip':
                         this.navName2 = '添加装备'
                         break;
+                    case 'addEquipType':
+                        this.navName2 = '添加装备分类'
+                        break;
                     case 'watchEquip':
                         this.navName2 = '查看装备'
                         break;
@@ -75,6 +78,7 @@
                     case 'editUser':
                         this.navName2 = '编辑用户信息'
                         break;
+
                 }
             }
         }

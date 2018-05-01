@@ -10,7 +10,12 @@
                         </h2>
                     </router-link>
                     <div class="adminInfo">
-
+                        <el-dropdown trigger="click" @command="outAdmin">
+                            <el-button><i class="el-icon-menu"></i>秦文凯</el-button>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item command="out">退出登录</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
                     </div>
                 </div>
             </el-header>
@@ -69,6 +74,20 @@
             handleOpen() {
             },
             handleClose() {
+            },
+            outAdmin(command) {
+                if (command == 'out') {
+                    this.$confirm('确认退出？',{
+                        confirmButtonText:'确认',
+                        cancelButtonText:'取消',
+                        type:'danger'
+                    }).then(()=>{
+                        this.$message.success('退出成功')
+                        this.$router.push('/login')
+                    }).catch(()=>{
+                        this.$message.info('取消退出')
+                    })
+                }
             }
         }
     }
