@@ -40,7 +40,7 @@
                 <el-form-item label="装备展示图片：">
                     <div class="imgsList" v-if="addRuleForm.dialogImageUrlArr">
                         <div class="imgDiv" v-for="item,index in addRuleForm.dialogImageUrlArr">
-                            <img :src="item" alt="" @mouseover="mouseShow(item,index)" >
+                            <img :src="item" alt="" @mouseover="mouseShow(item,index)">
                             <div class="dialogBg" v-if="index==currentIndex" @mouseout="mouseHide(item,index)"></div>
                             <i class="el-icon-delete" v-if="index==currentIndex" @click="deleteImg(val,index)"></i>
                         </div>
@@ -58,9 +58,11 @@
                 <el-form-item label="装备说明图片：">
                     <div class="imgsList" v-if="addRuleForm.remarkImageUrlArr">
                         <div class="imgDiv" v-for="item,index in addRuleForm.remarkImageUrlArr">
-                            <img :src="item" alt="" @mouseover="mouseRemarkShow(item,index)" >
-                            <div class="dialogBg" v-if="index==currentRemarkIndex" @mouseout="mouseRemarkHide(item,index)"></div>
-                            <i class="el-icon-delete" v-if="index==currentRemarkIndex" @click="deleteRemarkImg(item,index)"></i>
+                            <img :src="item" alt="" @mouseover="mouseRemarkShow(item,index)">
+                            <div class="dialogBg" v-if="index==currentRemarkIndex"
+                                 @mouseout="mouseRemarkHide(item,index)"></div>
+                            <i class="el-icon-delete" v-if="index==currentRemarkIndex"
+                               @click="deleteRemarkImg(item,index)"></i>
                         </div>
 
                     </div>
@@ -91,7 +93,7 @@
             var checkPrice = (rule, val, cb) => {
                 if (val == '') {
                     cb(new Error('请设置装备价格！'))
-                } else if (isNaN(val)||val < 0) {
+                } else if (isNaN(val) || val < 0) {
                     cb(new Error('价格必须为大于0的数字！'))
                 } else {
                     cb();
@@ -100,25 +102,25 @@
             return {
                 addRuleForm: {
                     equip_name: '',         // 装备名称
-                    price:'',               // 装备价格
-                    purpose:'',             // 装备用途
-                    classify_id:'',         // 装备分类id
-                    classify_name:'',       // 装备分类名称
+                    price: '',               // 装备价格
+                    purpose: '',             // 装备用途
+                    classify_id: '',         // 装备分类id
+                    classify_name: '',       // 装备分类名称
                     is_hot: 1,              // 是否为热销产品
                     is_sale: 1,             // 是否为特卖产品
                     sale_price: '0',        // 特卖价格
                     dialogImageUrl: '',             // 图片当前url      -- 产品图
                     dialogImageUrlArr: [],          // 图片url数组
-                    dialogImageId:'',               // 图片当前id
-                    dialogImageIdArr:[],            // 图片id数组
+                    dialogImageId: '',               // 图片当前id
+                    dialogImageIdArr: [],            // 图片id数组
 
-                    remarkImageUrl:'',              // 说明图
-                    remarkImageUrlArr:[],
-                    remarkImageId:'',
-                    remarkImageIdArr:[],
+                    remarkImageUrl: '',              // 说明图
+                    remarkImageUrlArr: [],
+                    remarkImageId: '',
+                    remarkImageIdArr: [],
 
                 },
-                classify:[],            // 分类
+                classify: [],            // 分类
 
                 addRule: {
                     equip_name: [
@@ -134,8 +136,8 @@
                         {required: true, message: '请填写装备介绍', trigger: 'blur'}
                     ]
                 },
-                currentIndex:-1,            // 显示哪一个
-                currentRemarkIndex:-1,            // 显示哪一个
+                currentIndex: -1,            // 显示哪一个
+                currentRemarkIndex: -1,            // 显示哪一个
 
 
             }
@@ -148,15 +150,15 @@
             // 获取装备分类
             getEquipClassify() {
                 this.$post('equip/class_list')
-                    .then(res=>{
+                    .then(res => {
                         this.classify = res.data
-                console.log(res)
+                        console.log(res)
                     })
             },
             // 改变装备分类选择
             classChange(val) {
                 this.addRuleForm.classify_id = val
-                for(let i=0;i<this.classify.length;i++) {
+                for (let i = 0; i < this.classify.length; i++) {
                     if (this.classify[i].class_id == this.addRuleForm.classify_id) {
                         this.addRuleForm.classify_name = this.classify[i].class_name
                     }
@@ -174,36 +176,36 @@
             },
             // 产品图
             // 显示隐藏删除按钮
-            mouseShow(val,index) {
+            mouseShow(val, index) {
                 this.currentIndex = index
             },
-            mouseHide(val,index) {
+            mouseHide(val, index) {
                 this.currentIndex = -1
             },
             // 删除图片
-            deleteImg(val,index) {
-                this.addRuleForm.dialogImageUrlArr.splice(index,1)
-                this.addRuleForm.dialogImageIdArr.splice(index,1)
+            deleteImg(val, index) {
+                this.addRuleForm.dialogImageUrlArr.splice(index, 1)
+                this.addRuleForm.dialogImageIdArr.splice(index, 1)
             },
             // 上传图片
             imgUpload(e) {
                 e.preventDefault();
                 let fileArr = e.target.files
-                for (let i=0;i<fileArr.length;i++) {
+                for (let i = 0; i < fileArr.length; i++) {
                     const type = fileArr[i].type
-                    const size = fileArr[i].size/1024/1024
-                    if (!(type != 'image/jpg'||'image/png'||'image/jpeg')) {
+                    const size = fileArr[i].size / 1024 / 1024
+                    if (!(type != 'image/jpg' || 'image/png' || 'image/jpeg')) {
                         this.$message.error('上传图片只能为jpg、jpeg、png格式！')
                         return;
-                    } else if (size>1) {
+                    } else if (size > 1) {
                         this.$message.error('上传图片大小不能超过1M！')
                         return;
                     } else {
                         let data = new FormData();
-                        data.append('image',fileArr[i])
-                        data.append('type',2)
-                        this.$upload('other/Img/upload',data)
-                            .then(res=>{
+                        data.append('image', fileArr[i])
+                        data.append('type', 2)
+                        this.$upload('other/Img/upload', data)
+                            .then(res => {
                                 this.addRuleForm.dialogImageUrl = res.url
                                 this.addRuleForm.dialogImageId = res.id
                                 this.addRuleForm.dialogImageUrlArr.push(this.addRuleForm.dialogImageUrl)
@@ -214,57 +216,57 @@
             },
             // 说明图
             // 显示隐藏删除按钮
-            mouseRemarkShow(val,index) {
+            mouseRemarkShow(val, index) {
                 this.currentRemarkIndex = index
             },
-            mouseRemarkHide(val,index) {
+            mouseRemarkHide(val, index) {
                 this.currentRemarkIndex = -1
             },
             // 删除图片
-            deleteRemarkImg(val,index) {
-                this.addRuleForm.remarkImageUrlArr.splice(index,1)
-                this.addRuleForm.remarkImageIdArr.splice(index,1)
+            deleteRemarkImg(val, index) {
+                this.addRuleForm.remarkImageUrlArr.splice(index, 1)
+                this.addRuleForm.remarkImageIdArr.splice(index, 1)
             },
             imgRemarkUpload(e) {
                 e.preventDefault();
                 let fileArr = e.target.files
-                for (let i=0;i<fileArr.length;i++) {
+                for (let i = 0; i < fileArr.length; i++) {
                     const type = fileArr[i].type
-                    const size = fileArr[i].size/1024/1024
-                    if (!(type != 'image/jpg'||'image/png'||'image/jpeg')) {
+                    const size = fileArr[i].size / 1024 / 1024
+                    if (!(type != 'image/jpg' || 'image/png' || 'image/jpeg')) {
                         this.$message.error('上传图片只能为jpg、jpeg、png格式！')
                         return;
-                    } else if (size>1) {
+                    } else if (size > 1) {
                         this.$message.error('上传图片大小不能超过1M！')
                         return;
                     } else {
                         let data = new FormData();
-                        data.append('image',fileArr[i])
-                        data.append('type',3)
-                        this.$upload('other/Img/upload',data)
-                            .then(res=>{
-                            this.addRuleForm.remarkImageUrl = res.url
-                        this.addRuleForm.remarkImageId = res.id
-                        this.addRuleForm.remarkImageUrlArr.push(this.addRuleForm.remarkImageUrl)
-                        this.addRuleForm.remarkImageIdArr.push(this.addRuleForm.remarkImageId)
-                    })
+                        data.append('image', fileArr[i])
+                        data.append('type', 3)
+                        this.$upload('other/Img/upload', data)
+                            .then(res => {
+                                this.addRuleForm.remarkImageUrl = res.url
+                                this.addRuleForm.remarkImageId = res.id
+                                this.addRuleForm.remarkImageUrlArr.push(this.addRuleForm.remarkImageUrl)
+                                this.addRuleForm.remarkImageIdArr.push(this.addRuleForm.remarkImageId)
+                            })
                     }
                 }
             },
             addEquipData() {
-                this.$post('equip/equip_add_update',{
-                    equip_name:this.addRuleForm.equip_name,
-                    price:this.addRuleForm.price,
-                    purpose:this.addRuleForm.purpose,
-                    classify_id:this.addRuleForm.classify_id,
-                    classify_name:this.addRuleForm.classify_name,
-                    is_hot:this.addRuleForm.is_hot,
-                    is_sale:this.addRuleForm.is_sale,
-                    sale_price:this.addRuleForm.sale_price,
-                    images:JSON.stringify(this.addRuleForm.dialogImageIdArr),
-                    introduce_images:JSON.stringify(this.addRuleForm.remarkImageIdArr)
+                this.$post('equip/equip_add_update', {
+                    equip_name: this.addRuleForm.equip_name,
+                    price: this.addRuleForm.price,
+                    purpose: this.addRuleForm.purpose,
+                    classify_id: this.addRuleForm.classify_id,
+                    classify_name: this.addRuleForm.classify_name,
+                    is_hot: this.addRuleForm.is_hot,
+                    is_sale: this.addRuleForm.is_sale,
+                    sale_price: this.addRuleForm.sale_price,
+                    images: JSON.stringify(this.addRuleForm.dialogImageIdArr),
+                    introduce_images: JSON.stringify(this.addRuleForm.remarkImageIdArr)
                 })
-                    .then(res=>{
+                    .then(res => {
                         this.$confirm('添加成功', '提示', {
                             confirmButtonText: '继续添加',
                             cancelButtonText: '回到装备页',
@@ -279,7 +281,7 @@
                     })
             },
             submitForm(formName) {
-                this.$refs[formName].validate((valid)=>{
+                this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.addEquipData()
                     } else {
@@ -332,7 +334,7 @@
                         height: 100%;
                         top: 0;
                         left: 0;
-                        background-color: rgba(0,0,0,.2);
+                        background-color: rgba(0, 0, 0, .2);
                     }
                     i {
                         position: absolute;

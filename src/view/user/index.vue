@@ -37,7 +37,8 @@
                         <p>{{scope.row.member_mobile}}</p>
                     </template>
                 </el-table-column>
-                <el-table-column header-align="center" align="center" prop="member_nickname" label="昵称"></el-table-column>
+                <el-table-column header-align="center" align="center" prop="member_nickname"
+                                 label="昵称"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="create_time" label="注册时间"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="orderNum" label="订单总数">
                     <template slot-scope="scope">
@@ -63,25 +64,25 @@
         data() {
             return {
                 searchForm: {
-                    userTypes:[
+                    userTypes: [
                         {
-                            type:'1',
-                            name:'用户账号'
+                            type: '1',
+                            name: '用户账号'
                         },
                         {
-                            type:'2',
-                            name:'用户姓名'
+                            type: '2',
+                            name: '用户姓名'
                         },
                         {
-                            type:'3',
-                            name:'用户手机号'
+                            type: '3',
+                            name: '用户手机号'
                         },
                     ],
-                    userType:'1',
+                    userType: '1',
                     userVal: '',
                 },
                 userData: [],
-                totalPage:1
+                totalPage: 1
             }
         },
         components: {BreadCrumb},
@@ -89,12 +90,12 @@
             this.getUserList()
         },
         methods: {
-            getUserList(){
-                this.$post('member/member_list',{
-                    search_field_name:this.searchForm.userType,
-                    search_field_value:this.searchForm.userVal
+            getUserList() {
+                this.$post('member/member_list', {
+                    search_field_name: this.searchForm.userType,
+                    search_field_value: this.searchForm.userVal
                 })
-                    .then(res=>{
+                    .then(res => {
                         this.userData = res.data.list
                         this.totalPage = res.data.last_page * 10
                     })

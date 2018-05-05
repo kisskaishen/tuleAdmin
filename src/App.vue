@@ -8,21 +8,18 @@
     export default {
         name: 'App',
         data() {
-            return {
-
-            }
+            return {}
         },
-        created(){
+        created() {
 
         },
-        methods:{
-
-        }
+        methods: {}
     }
 </script>
 
 <style>
     @import './style/base.css';
+
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;

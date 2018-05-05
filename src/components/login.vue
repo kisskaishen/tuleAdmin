@@ -26,20 +26,20 @@
         name: "login",
         data() {
             return {
-                loginForm:{
-                    userName:'',
-                    userPwd:'',
-                    captcha:'',
+                loginForm: {
+                    userName: '',
+                    userPwd: '',
+                    captcha: '',
                 },
-                loginRules:{
-                    userName:[
-                        {required:true,message:'登录账号不能为空',trigger:'blur'}
+                loginRules: {
+                    userName: [
+                        {required: true, message: '登录账号不能为空', trigger: 'blur'}
                     ],
-                    userPwd:[
-                        {required:true,message:'登录密码不能为空',trigger:'blur'}
+                    userPwd: [
+                        {required: true, message: '登录密码不能为空', trigger: 'blur'}
                     ],
-                    captcha:[
-                        {required:true,message:'验证码不能为空',trigger:'blur'}
+                    captcha: [
+                        {required: true, message: '验证码不能为空', trigger: 'blur'}
                     ]
                 }
 
@@ -50,7 +50,7 @@
         },
         methods: {
             submit(form) {
-                this.$refs[form].validate((valid)=>{
+                this.$refs[form].validate((valid) => {
                     if (valid) {
                         this.$router.push('/')
                         // if (this.$refs[form].model.captcha) {
@@ -80,7 +80,7 @@
         right: 0;
         top: 0;
         bottom: 0;
-        background:linear-gradient(red,blue);
+        background: linear-gradient(red, blue);
         .loginDiv {
             position: absolute;
             width: 300px;
@@ -103,7 +103,7 @@
                     display: inline-block;
                     width: 114px;
                     height: 38px;
-                    border:1px solid #ccc;
+                    border: 1px solid #ccc;
                     border-radius: 0;
                 }
                 .el-button {

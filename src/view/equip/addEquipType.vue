@@ -18,7 +18,8 @@
                             已有分类<i class="el-icon-arrow-down el-icon--right"></i>
                         </el-button>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item v-for="item,index in classify" :key="item.class_id">{{item.class_name}}</el-dropdown-item>
+                            <el-dropdown-item v-for="item,index in classify" :key="item.class_id">{{item.class_name}}
+                            </el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </el-form-item>
@@ -37,7 +38,7 @@
     export default {
         name: "add-equip-type",
         data() {
-            var checkSort = (rule, val, cb) =>{
+            var checkSort = (rule, val, cb) => {
                 if (val == '') {
                     cb(new Error('请设置装备排序！'))
                 } else if (isNaN(val) || val < 0) {
@@ -49,17 +50,17 @@
             return {
                 formModel: {
                     class_name: '',
-                    sort:''
+                    sort: ''
                 },
                 formRules: {
                     class_name: [
                         {required: true, message: '请输入装备类型', trigger: 'blur'}
                     ],
                     sort: [
-                        {required: true,validator:checkSort,trigger:'change'}
+                        {required: true, validator: checkSort, trigger: 'change'}
                     ]
                 },
-                classify:[]
+                classify: []
             }
         },
         components: {BreadCrumb},
@@ -71,30 +72,30 @@
             getEquipClassify() {
                 this.$post('equip/class_list')
                     .then(res => {
-                    this.classify = res.data
-            })
+                        this.classify = res.data
+                    })
             },
             addClassify() {
-                this.$post('equip/class_add_update',{
-                    class_name:this.formModel.class_name,
-                    sort:this.formModel.sort
+                this.$post('equip/class_add_update', {
+                    class_name: this.formModel.class_name,
+                    sort: this.formModel.sort
                 })
-                    .then(res=>{
+                    .then(res => {
                         this.$message.success(res.message)
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             this.resetForm('formModel')
-                        },800)
+                        }, 800)
                     })
             },
             submitForm(e) {
-                this.$refs[e].validate((valid)=>{
+                this.$refs[e].validate((valid) => {
                     if (valid) {
                         this.addClassify()
 
                     } else {
                         this.$message.success('必填信息未填写！')
 
-                }
+                    }
                 })
             },
             resetForm(e) {

@@ -35,7 +35,8 @@
                       :default-sort="{prop:'startTime'}">
                 <el-table-column header-align="center" align="center" prop="equip_name" label="装备名称"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="purpose" label="装备用途"></el-table-column>
-                <el-table-column header-align="center" align="center" prop="classify_name" label="装备分类"></el-table-column>
+                <el-table-column header-align="center" align="center" prop="classify_name"
+                                 label="装备分类"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="price"
                                  label="价格"></el-table-column>
                 <el-table-column header-align="center" align="center" label="操作">
@@ -86,7 +87,7 @@
                     equipType: '0',
                 },
                 equipData: [],
-                totalPage:1
+                totalPage: 1
             }
         },
         components: {BreadCrumb},
@@ -98,9 +99,9 @@
             // 装备列表
             getList() {
                 this.$post('equip/equip_list', {
-                    equip_name:this.searchForm.equipName,
-                    purpose:this.searchForm.equipUse,
-                    classify_name:this.searchForm.equipType,
+                    equip_name: this.searchForm.equipName,
+                    purpose: this.searchForm.equipUse,
+                    classify_name: this.searchForm.equipType,
                 })
                     .then(res => {
                         this.equipData = res.data.list
@@ -111,22 +112,22 @@
             getEquipClassify() {
                 this.$post('equip/class_list')
                     .then(res => {
-                    this.classify = res.data
-                })
+                        this.classify = res.data
+                    })
             },
             seeTicket(e) {
                 this.$router.push({
-                    path:'/equip/watchEquip',
-                    query:{
-                        equip_id:e.equip_id
+                    path: '/equip/watchEquip',
+                    query: {
+                        equip_id: e.equip_id
                     }
                 })
             },
             editTicket(e) {
                 this.$router.push({
-                    path:'/equip/editEquip',
-                    query:{
-                        equip_id:e.equip_id
+                    path: '/equip/editEquip',
+                    query: {
+                        equip_id: e.equip_id
                     }
                 })
             },
@@ -137,10 +138,10 @@
                     type: 'warning'
                 })
                     .then((res) => {
-                        this.$post('equip/equip_del',{
-                            equip_id:e.equip_id
+                        this.$post('equip/equip_del', {
+                            equip_id: e.equip_id
                         })
-                            .then(res=>{
+                            .then(res => {
                                 this.equipData.splice(e.$index, 1)
                                 this.$message.success('删除成功')
                             })

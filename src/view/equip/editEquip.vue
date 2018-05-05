@@ -38,7 +38,7 @@
                 <el-form-item label="特卖价格：" prop="sale_price" v-if="editRuleForm.is_sale=='1'">
                     <el-input v-model.number="editRuleForm.sale_price" placeholder="请设置门票特卖价格"></el-input>
                 </el-form-item>
-                <el-form-item label="装备展示图片：" >
+                <el-form-item label="装备展示图片：">
                     <div class="imgsList" v-if="editRuleForm.images">
                         <div class="imgDiv" v-for="item,index in editRuleForm.images">
                             <img :src="item.image" alt="" @mouseover="mouseShow(item,index)">
@@ -91,7 +91,7 @@
     export default {
         name: "edit-equip",
         data() {
-            var checkPrice = (rule, val, cb) =>{
+            var checkPrice = (rule, val, cb) => {
                 if (val == '') {
                     cb(new Error('请设置装备价格！'))
                 } else if (isNaN(val) || val < 0) {
@@ -110,12 +110,12 @@
                     is_hot: 1,              // 是否为热销产品
                     is_sale: 1,             // 是否为特卖产品
                     sale_price: '0',        // 特卖价格
-                    images:[],
-                    introduce_images:[],
+                    images: [],
+                    introduce_images: [],
 
                 },
-                images:[],
-                introduce_images:[],
+                images: [],
+                introduce_images: [],
                 dialogImageIdArr: [],            // 图片id数组
 
                 remarkImageIdArr: [],
@@ -162,13 +162,13 @@
             getEquipClassify() {
                 this.$post('equip/class_list')
                     .then(res => {
-                    this.classify = res.data
-            })
+                        this.classify = res.data
+                    })
             },
             // 改变装备分类选择
             classChange(val) {
                 this.editRuleForm.classify_id = val
-                for(let i=0;i<this.classify.length;i++) {
+                for (let i = 0; i < this.classify.length; i++) {
                     if (this.classify[i].class_id == this.editRuleForm.classify_id) {
                         this.editRuleForm.classify_name = this.classify[i].class_name
                     }
@@ -182,16 +182,16 @@
             // 是否热卖
             isSaleChange(val) {
                 if (val == '2') {
-                    this.$confirm('切换后此商品特卖价格将被清空，是否继续？','提示',{
-                        confirmButtonText:'继续',
-                        cancelButtonText:'取消',
-                        type:'info'
+                    this.$confirm('切换后此商品特卖价格将被清空，是否继续？', '提示', {
+                        confirmButtonText: '继续',
+                        cancelButtonText: '取消',
+                        type: 'info'
                     })
-                        .then(()=>{
+                        .then(() => {
                             this.editRuleForm.is_sale = val
                             this.editRuleForm.sale_price = '0'
                         })
-                        .catch(()=>{
+                        .catch(() => {
                             this.editRuleForm.is_sale = 1
                             this.editRuleForm.sale_price = this.editRuleForm.sale_price
                         })
@@ -214,21 +214,21 @@
             imgUpload(e) {
                 e.preventDefault();
                 let fileArr = e.target.files
-                for (let i=0;i<fileArr.length;i++) {
+                for (let i = 0; i < fileArr.length; i++) {
                     const type = fileArr[i].type
-                    const size = fileArr[i].size/1024/1024
-                    if (!(type != 'image/jpg'||'image/png'||'image/jpeg')) {
+                    const size = fileArr[i].size / 1024 / 1024
+                    if (!(type != 'image/jpg' || 'image/png' || 'image/jpeg')) {
                         this.$message.error('上传图片只能为jpg、jpeg、png格式！')
                         return;
-                    } else if (size>1) {
+                    } else if (size > 1) {
                         this.$message.error('上传图片大小不能超过1M！')
                         return;
                     } else {
                         let data = new FormData();
-                        data.append('image',fileArr[i])
-                        data.append('type',2)
-                        this.$upload('other/Img/upload',data)
-                            .then(res=>{
+                        data.append('image', fileArr[i])
+                        data.append('type', 2)
+                        this.$upload('other/Img/upload', data)
+                            .then(res => {
                                 this.images.push(res)
                             })
                     }
@@ -250,35 +250,34 @@
             imgRemarkUpload(e) {
                 e.preventDefault();
                 let fileArr = e.target.files
-                for (let i=0;i<fileArr.length;i++) {
+                for (let i = 0; i < fileArr.length; i++) {
                     const type = fileArr[i].type
-                    const size = fileArr[i].size/1024/1024
-                    if (!(type != 'image/jpg'||'image/png'||'image/jpeg')) {
+                    const size = fileArr[i].size / 1024 / 1024
+                    if (!(type != 'image/jpg' || 'image/png' || 'image/jpeg')) {
                         this.$message.error('上传图片只能为jpg、jpeg、png格式！')
                         return;
-                    } else if (size>1) {
+                    } else if (size > 1) {
                         this.$message.error('上传图片大小不能超过1M！')
                         return;
                     } else {
                         let data = new FormData();
-                        data.append('image',fileArr[i])
-                        data.append('type',3)
-                        this.$upload('other/Img/upload',data)
-                            .then(res=>{
+                        data.append('image', fileArr[i])
+                        data.append('type', 3)
+                        this.$upload('other/Img/upload', data)
+                            .then(res => {
                                 this.introduce_images.push(res)
                             })
                     }
                 }
             },
             editEquipData() {
-                for(let i=0;i<this.images.length;i++) {
+                for (let i = 0; i < this.images.length; i++) {
                     this.dialogImageIdArr.push((this.images[i].id).toString())
                 }
                 console.log(this.dialogImageIdArr)
-                for(let i=0;i<this.introduce_images.length;i++) {
+                for (let i = 0; i < this.introduce_images.length; i++) {
                     this.remarkImageIdArr.push((this.introduce_images[i].id).toString())
                 }
-
 
 
                 this.$post('equip/equip_add_update', {
@@ -300,7 +299,7 @@
             },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
-                    if(valid) {
+                    if (valid) {
                         this.editEquipData();
                     } else {
                         this.$message.error('信息必填！')

@@ -10,20 +10,20 @@
 <script>
     export default {
         name: "bread-crumb",
-        props:['path'],
+        props: ['path'],
         data() {
             return {
-                navName:'',
-                navName2:'',
-                navLen:true,
-                firstNav:'',
-                secondNav:'',
+                navName: '',
+                navName2: '',
+                navLen: true,
+                firstNav: '',
+                secondNav: '',
             }
         },
         mounted() {
             this.navData(this.path)
         },
-        methods:{
+        methods: {
             navData(path) {
                 this.firstNav = path.split('/')[1]
                 this.secondNav = path.split('/')[2]

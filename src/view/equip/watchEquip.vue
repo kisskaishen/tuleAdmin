@@ -25,7 +25,7 @@
                 <el-form-item label="特卖价格：" prop="sale_price" v-if="watchRuleForm.is_sale=='1'">
                     <span>{{watchRuleForm.sale_price}}</span>
                 </el-form-item>
-                <el-form-item label="装备展示图片：" >
+                <el-form-item label="装备展示图片：">
                     <div class="imgsList" v-if="watchRuleForm.images">
                         <div class="imgDiv" v-for="item,index in watchRuleForm.images">
                             <img :src="item.image" alt="">
@@ -66,8 +66,8 @@
                     is_hot: 1,              // 是否为热销产品
                     is_sale: 1,             // 是否为特卖产品
                     sale_price: '0',        // 特卖价格
-                    images:[],
-                    introduce_images:[],
+                    images: [],
+                    introduce_images: [],
 
                 }
 
@@ -91,7 +91,6 @@
             goBack() {
                 this.$router.push('/equip')
             },
-
 
 
         }

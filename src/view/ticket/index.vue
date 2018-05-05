@@ -11,7 +11,8 @@
                             :label="item.label"
                             :value="item.value"></el-option>
                     </el-select>
-                    <el-input v-model="searchForm.ticketName" size="small" clearable placeholder="请输入门票/景区名称"></el-input>
+                    <el-input v-model="searchForm.ticketName" size="small" clearable
+                              placeholder="请输入门票/景区名称"></el-input>
                 </el-form-item>
                 <el-form-item label="所在地">
                     <el-input v-model="searchForm.cityName" size="small" clearable placeholder="请输入城市名称"></el-input>
@@ -36,15 +37,20 @@
                     <el-button size="small" type="success" @click="outExcel">导出Excel</el-button>
                 </el-form-item>
             </el-form>
-            <el-table :data="ticketData" style="width: 100%;" size="medium"  highlight-current-row :default-sort="{prop:'startTime'}">
-                <el-table-column header-align="center" align="center" prop="leave_date" label="出发日期" sortable></el-table-column>
+            <el-table :data="ticketData" style="width: 100%;" size="medium" highlight-current-row
+                      :default-sort="{prop:'startTime'}">
+                <el-table-column header-align="center" align="center" prop="leave_date" label="出发日期"
+                                 sortable></el-table-column>
                 <el-table-column header-align="center" align="center" prop="ticket_name" label="门票名称"></el-table-column>
-                <el-table-column header-align="center" align="center" width="80px" prop="price" label="票价"></el-table-column>
+                <el-table-column header-align="center" align="center" width="80px" prop="price"
+                                 label="票价"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="scenic_name" label="景点名称"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="content" label="包含事项"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="narea" label="所在地区"></el-table-column>
-                <el-table-column header-align="center" align="center" width="100px" prop="delivery_num" label="总票数"></el-table-column>
-                <el-table-column header-align="center" align="center" width="120px" prop="real_num" label="剩余票数" sortable></el-table-column>
+                <el-table-column header-align="center" align="center" width="100px" prop="delivery_num"
+                                 label="总票数"></el-table-column>
+                <el-table-column header-align="center" align="center" width="120px" prop="real_num" label="剩余票数"
+                                 sortable></el-table-column>
                 <el-table-column header-align="center" align="center" width="60px" label="操作">
                     <template slot-scope="scope">
                         <el-button size="small" plain @click="seeTicket(scope.row)">查看</el-button>
@@ -72,38 +78,38 @@
             return {
                 searchForm: {
                     ticketName: '',
-                    cityName:'',
-                    startTime:'',
-                    types:[
+                    cityName: '',
+                    startTime: '',
+                    types: [
                         {
-                            label:'门票名称',
-                            value:'ticket_name'
+                            label: '门票名称',
+                            value: 'ticket_name'
                         },
                         {
-                            label:'景区名称',
-                            value:'scenic_name'
+                            label: '景区名称',
+                            value: 'scenic_name'
                         }
                     ],
-                    typeVal:'ticket_name'
+                    typeVal: 'ticket_name'
                 },
-                ticketData:[],
-                totalPage:1,       // 总页数
+                ticketData: [],
+                totalPage: 1,       // 总页数
             }
         },
         components: {BreadCrumb},
         mounted() {
             this.getList()
         },
-        methods:{
+        methods: {
             // 获取列表信息
             getList() {
-                this.$post('ticket/ticket_list',{
-                    search_field_name:this.searchForm.typeVal,
-                    search_field_value:this.searchForm.ticketName,
-                    narea:this.searchForm.cityName,
-                    leave_date:this.searchForm.startTime
+                this.$post('ticket/ticket_list', {
+                    search_field_name: this.searchForm.typeVal,
+                    search_field_value: this.searchForm.ticketName,
+                    narea: this.searchForm.cityName,
+                    leave_date: this.searchForm.startTime
                 })
-                    .then(res=>{
+                    .then(res => {
                         this.ticketData = res.data.list
                         this.totalPage = res.data.last_page * 10
                     })
@@ -115,9 +121,9 @@
             // 导出为excel
             outExcel() {
                 require.ensure([], () => {
-                    const { export_json_to_excel } = require('@/excel/Export2Excel');
-                    const tHeader = ['出发日期', '门票名称','票价','景点名称','包含事项','所在地区','总票数','剩余票数'];
-                    const filterVal = ['leave_date', 'ticket_name','price','scenic_name','content','narea','delivery_num','real_num'];
+                    const {export_json_to_excel} = require('@/excel/Export2Excel');
+                    const tHeader = ['出发日期', '门票名称', '票价', '景点名称', '包含事项', '所在地区', '总票数', '剩余票数'];
+                    const filterVal = ['leave_date', 'ticket_name', 'price', 'scenic_name', 'content', 'narea', 'delivery_num', 'real_num'];
                     const list = this.ticketData;
                     const data = this.formatJson(filterVal, list);
                     export_json_to_excel(tHeader, data, '门票列表');
@@ -129,36 +135,36 @@
             // 查看当前数据
             seeTicket(e) {
                 this.$router.push({
-                    path:'/ticket/watchTicket',
-                    query:{
-                        ticket_id:e.ticket_id
+                    path: '/ticket/watchTicket',
+                    query: {
+                        ticket_id: e.ticket_id
                     }
                 })
             },
             // 编辑当前数据
             editTicket(e) {
                 this.$router.push({
-                    path:'/ticket/editTicket',
-                    query:{
-                        ticket_id:e.ticket_id
+                    path: '/ticket/editTicket',
+                    query: {
+                        ticket_id: e.ticket_id
                     }
                 })
             },
             // 删除当前数据
             deleteTicket(e) {
-                this.$confirm('确认删除此条信息？','提示',{
-                    confirmButtonText:'确认',
-                    cancelButtonText:'取消',
-                    type:'warning'
+                this.$confirm('确认删除此条信息？', '提示', {
+                    confirmButtonText: '确认',
+                    cancelButtonText: '取消',
+                    type: 'warning'
                 })
-                    .then(()=>{
-                        this.$post('ticket/ticket_del',{ticket_id:e.row.ticket_id})
-                            .then(res=>{
-                                this.ticketData.splice(e.$index,1)
+                    .then(() => {
+                        this.$post('ticket/ticket_del', {ticket_id: e.row.ticket_id})
+                            .then(res => {
+                                this.ticketData.splice(e.$index, 1)
                                 this.$message.success('删除成功')
                             })
                     })
-                    .catch(()=>{
+                    .catch(() => {
                         this.$message.info('取消删除')
                     })
             },

@@ -131,14 +131,14 @@
                         orderPeople: '秦文凯',
                         orderTel: '13798238693',
                         ticketName: '云台山门票',
-                        ticketNum:'1',
+                        ticketNum: '1',
                         orderTime: '2018-03-13 12:00:00',
                         payTime: '2018-03-13 12:00:00',
                         payMoney: '20',
                         payStatus: '支付成功'
                     }
                 ],
-                totalPage:1
+                totalPage: 1
             }
         },
         components: {BreadCrumb},

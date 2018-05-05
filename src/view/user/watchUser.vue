@@ -19,7 +19,9 @@
                     <img :src="userInfo.headerImg" :alt="userInfo.nickName">
                 </el-form-item>
                 <el-form-item>
-                    <el-button><router-link to="/user">返回用户列表</router-link></el-button>
+                    <el-button>
+                        <router-link to="/user">返回用户列表</router-link>
+                    </el-button>
                     <el-button type="danger" plain @click="goEdit">去修改</el-button>
                 </el-form-item>
             </el-form>
@@ -38,8 +40,8 @@
                     userName: 'qwk',
                     userTel: '13798238693',
                     userIdentity: '410823199510240078',
-                    nickName:'0的离心率',
-                    headerImg:'',
+                    nickName: '0的离心率',
+                    headerImg: '',
                 },
             }
         },

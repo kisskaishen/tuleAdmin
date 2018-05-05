@@ -16,7 +16,7 @@ const EquipIndex = r => require.ensure([], () => r(require('@/view/equip/index')
 const AddEquip = r => require.ensure([], () => r(require('@/view/equip/addEquip')), 'AddEquip')
 const AddEquipType = r => require.ensure([], () => r(require('@/view/equip/addEquipType')), 'AddEquipType')
 const EditEquip = r => require.ensure([], () => r(require('@/view/equip/editEquip')), 'EditEquip')
-const WatchEquip= r => require.ensure([], () => r(require('@/view/equip/watchEquip')), 'WatchEquip')
+const WatchEquip = r => require.ensure([], () => r(require('@/view/equip/watchEquip')), 'WatchEquip')
 
 const OrderIndex = r => require.ensure([], () => r(require('@/view/order/index')), 'OrderIndex')
 const WatchOrder = r => require.ensure([], () => r(require('@/view/order/watchOrder')), 'WatchOrder')
@@ -29,18 +29,18 @@ Vue.use(Router)
 
 export default new Router({
     mode: 'history',
-    linkActiveClass:'',
+    linkActiveClass: '',
     routes: [
         {
             path: '/',
-            name:'home',
-            redirect:'/index/index',
+            name: 'home',
+            redirect: '/index/index',
             component: Home,
             children: [
                 {
                     path: '/index',
                     component: IndexIndex,
-                    children:[
+                    children: [
                         {
                             path: '/index/index',
                             component: IndexIndex,

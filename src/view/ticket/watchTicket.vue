@@ -37,8 +37,12 @@
                     <span>{{ticketInfo.attention}}</span>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="danger"><router-link :to="'editTicket?ticket_id='+this.$route.query.ticket_id">去修改</router-link></el-button>
-                    <el-button><router-link to="/ticket/index">门票管理</router-link></el-button>
+                    <el-button type="danger">
+                        <router-link :to="'editTicket?ticket_id='+this.$route.query.ticket_id">去修改</router-link>
+                    </el-button>
+                    <el-button>
+                        <router-link to="/ticket/index">门票管理</router-link>
+                    </el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -61,10 +65,10 @@
         },
         methods: {
             getInfo() {
-                this.$post('ticket/ticket_detail',{
-                    ticket_id:this.$route.query.ticket_id
+                this.$post('ticket/ticket_detail', {
+                    ticket_id: this.$route.query.ticket_id
                 })
-                    .then(res=>{
+                    .then(res => {
                         this.ticketInfo = res.data
                     })
             },

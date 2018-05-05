@@ -2,53 +2,68 @@
     margin: 0;
     padding: 0;
 }
+
 body {
     background-color: #f2f2f2;
 }
+
 i {
     display: block;
 }
+
 .index {
     background: url("../images/index.png") no-repeat center /100%;
 }
+
 .ticket {
     background: url("../images/ticket.png") no-repeat center /100%;
 }
+
 .equip {
     background: url("../images/equip.png") no-repeat center /100%;
 }
+
 .order {
     background: url("../images/order.png") no-repeat center /100%;
 }
+
 .user {
     background: url("../images/user.png") no-repeat center /100%;
 }
+
 a {
     color: #333;
     text-decoration: none;
 }
+
 img {
     display: block;
     width: 220px;
     height: 150px;
-    border:1px solid #ccc;
+    border: 1px solid #ccc;
     border-radius: 10px;
 }
+
 .primary {
     color: #409eff;
 }
+
 .danger {
     color: #f56c6c;
 }
+
 .success {
     color: #67c23a;
 }
+
 .warning {
     color: #e6a23c;
 }
+
 .info {
     color: #909399;
 }
+
 .tip p {
     color: #f56c6c;
     font-size: 12px;

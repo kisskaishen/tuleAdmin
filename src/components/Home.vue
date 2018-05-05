@@ -63,28 +63,26 @@
     export default {
         name: "home",
         data() {
-            return {
-
-            }
+            return {}
         },
         mounted() {
 
         },
-        methods:{
+        methods: {
             handleOpen() {
             },
             handleClose() {
             },
             outAdmin(command) {
                 if (command == 'out') {
-                    this.$confirm('确认退出？',{
-                        confirmButtonText:'确认',
-                        cancelButtonText:'取消',
-                        type:'danger'
-                    }).then(()=>{
+                    this.$confirm('确认退出？', {
+                        confirmButtonText: '确认',
+                        cancelButtonText: '取消',
+                        type: 'danger'
+                    }).then(() => {
                         this.$message.success('退出成功')
                         this.$router.push('/login')
-                    }).catch(()=>{
+                    }).catch(() => {
                         this.$message.info('取消退出')
                     })
                 }
@@ -120,7 +118,6 @@
 
     }
 
-
     .el-aside {
         background-color: #fff;
         .el-menu-item {
@@ -149,6 +146,7 @@
             }
         }
     }
+
     .el-main {
         background-color: #fff;
         margin: 20px 0 0 20px;

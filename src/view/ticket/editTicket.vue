@@ -2,7 +2,8 @@
     <div>
         <bread-crumb :path="this.$route.path"></bread-crumb>
         <div class="container">
-            <el-form :model="editRuleForm" :rules="addRule" ref="editRuleForm" label-width="140px" label-position="right" class="demo-ruleForm">
+            <el-form :model="editRuleForm" :rules="addRule" ref="editRuleForm" label-width="140px"
+                     label-position="right" class="demo-ruleForm">
                 <el-form-item label="门票名称：" prop="ticket_name">
                     <el-input v-model="editRuleForm.ticket_name" placeholder="请输入门票名称"></el-input>
                 </el-form-item>
@@ -70,7 +71,8 @@
                     </div>
                 </el-form-item>
                 <el-form-item label="注意说明：" prop="attention">
-                    <el-input type="textarea" :rows="3" v-model="editRuleForm.attention" placeholder="请填写注意说明（选填）"></el-input>
+                    <el-input type="textarea" :rows="3" v-model="editRuleForm.attention"
+                              placeholder="请填写注意说明（选填）"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="danger" @click="submitForm('editRuleForm')">确认修改</el-button>
@@ -107,20 +109,20 @@
             }
             return {
                 editRuleForm: {
-                    ticket_id:'',
-                    ticket_name:'',
-                    scenic_name:'',
-                    narea:'',
-                    delivery_num:'',
-                    price:'',
-                    introduce:'',
-                    attention:'',
-                    is_hot:'',
-                    is_sale:'',
-                    sale_price:'',
-                    leave_type:'',
-                    leave_date:'',
-                    images:[],
+                    ticket_id: '',
+                    ticket_name: '',
+                    scenic_name: '',
+                    narea: '',
+                    delivery_num: '',
+                    price: '',
+                    introduce: '',
+                    attention: '',
+                    is_hot: '',
+                    is_sale: '',
+                    sale_price: '',
+                    leave_type: '',
+                    leave_date: '',
+                    images: [],
                 },
                 addRule: {
                     ticket_name: [
@@ -138,7 +140,7 @@
                     delivery_num: [
                         {required: true, validator: checkTicket, trigger: 'blur'}
                     ],
-                    sale_price:[
+                    sale_price: [
                         {required: true, validator: checkPrice, trigger: 'blur'}
                     ],
                     introduce: [
@@ -146,10 +148,10 @@
                     ]
                 },
                 dialogVisible: false,   // 图片
-                uploadData:{type:1},
+                uploadData: {type: 1},
                 currentIndex: -1,            // 显示哪一个
-                images:[],              // 图片数组，包括id和url的对象
-                dialogImageIdArr:[],        // 图片id数组
+                images: [],              // 图片数组，包括id和url的对象
+                dialogImageIdArr: [],        // 图片id数组
             }
         },
         components: {BreadCrumb},
@@ -159,13 +161,13 @@
         methods: {
             // 先获取信息
             getInfo() {
-                this.$post('ticket/ticket_detail',{
-                    ticket_id:this.$route.query.ticket_id
+                this.$post('ticket/ticket_detail', {
+                    ticket_id: this.$route.query.ticket_id
                 })
-                    .then(res=>{
+                    .then(res => {
                         this.editRuleForm = res.data
                         this.images = res.data.images
-                })
+                    })
             },
             // 产品图
             // 显示隐藏删除按钮
@@ -183,27 +185,26 @@
             imgUpload(e) {
                 e.preventDefault();
                 let fileArr = e.target.files
-                for (let i=0;i<fileArr.length;i++) {
+                for (let i = 0; i < fileArr.length; i++) {
                     const type = fileArr[i].type
-                    const size = fileArr[i].size/1024/1024
-                    if (!(type != 'image/jpg'||'image/png'||'image/jpeg')) {
+                    const size = fileArr[i].size / 1024 / 1024
+                    if (!(type != 'image/jpg' || 'image/png' || 'image/jpeg')) {
                         this.$message.error('上传图片只能为jpg、jpeg、png格式！')
                         return;
-                    } else if (size>1) {
+                    } else if (size > 1) {
                         this.$message.error('上传图片大小不能超过1M！')
                         return;
                     } else {
                         let data = new FormData();
-                        data.append('image',fileArr[i])
-                        data.append('type',1)
-                        this.$upload('other/Img/upload',data)
-                            .then(res=>{
+                        data.append('image', fileArr[i])
+                        data.append('type', 1)
+                        this.$upload('other/Img/upload', data)
+                            .then(res => {
                                 this.images.push(res)
                             })
                     }
                 }
             },
-
 
 
             // 选择出发时间类型
@@ -214,35 +215,34 @@
             },
 
 
-
             // 编辑门票接口
             editTicket() {
-                for(let i=0;i<this.images.length;i++) {
+                for (let i = 0; i < this.images.length; i++) {
                     this.dialogImageIdArr.push((this.images[i].id).toString())
                 }
-                this.$post('ticket/ticket_add_update',{
-                    ticket_id:this.editRuleForm.ticket_id,
-                    ticket_name:this.editRuleForm.ticket_name,
-                    scenic_name:this.editRuleForm.scenic_name,
-                    narea:this.editRuleForm.narea,
-                    delivery_num:this.editRuleForm.delivery_num,
-                    price:this.editRuleForm.price,
-                    introduce:this.editRuleForm.introduce,
-                    attention:this.editRuleForm.attention,
-                    is_hot:this.editRuleForm.is_hot,
-                    is_sale:this.editRuleForm.is_sale,
-                    sale_price:this.editRuleForm.sale_price,
-                    leave_type:this.editRuleForm.leave_type,
-                    leave_date:this.editRuleForm.leave_date,
-                    images:JSON.stringify(this.dialogImageIdArr),
+                this.$post('ticket/ticket_add_update', {
+                    ticket_id: this.editRuleForm.ticket_id,
+                    ticket_name: this.editRuleForm.ticket_name,
+                    scenic_name: this.editRuleForm.scenic_name,
+                    narea: this.editRuleForm.narea,
+                    delivery_num: this.editRuleForm.delivery_num,
+                    price: this.editRuleForm.price,
+                    introduce: this.editRuleForm.introduce,
+                    attention: this.editRuleForm.attention,
+                    is_hot: this.editRuleForm.is_hot,
+                    is_sale: this.editRuleForm.is_sale,
+                    sale_price: this.editRuleForm.sale_price,
+                    leave_type: this.editRuleForm.leave_type,
+                    leave_date: this.editRuleForm.leave_date,
+                    images: JSON.stringify(this.dialogImageIdArr),
                 })
-                    .then(res=>{
+                    .then(res => {
                         this.$message.success(res.message)
                     })
             },
             // 编辑门票接口提交
             submitForm(formName) {
-                this.$refs[formName].validate((valid)=>{
+                this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.editTicket()
                     } else {
@@ -262,7 +262,7 @@
     .container {
         margin-top: 20px;
         .el-form {
-            .el-input, .el-textarea ,.el-radio-group{
+            .el-input, .el-textarea, .el-radio-group {
                 width: 400px;
                 float: left;
                 .el-radio {
@@ -335,12 +335,14 @@
     }
 </style>
 <style lang="scss">
-    .el-upload,.el-upload-list {
+    .el-upload, .el-upload-list {
         float: left;
     }
+
     .el-upload--picture-card {
         float: left;
     }
+
     .addImgBtn {
         .el-button {
             i {
