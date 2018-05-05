@@ -26,18 +26,19 @@
             <el-table :data="userData" style="width: 100%;" size="medium" highlight-current-row>
                 <el-table-column header-align="center" align="center" width="120px" label="微信头像">
                     <template slot-scope="scope">
-                        <img :src="scope.row.headerImg" :alt="scope.row.nickName">
+                        <img :src="scope.row.member_avatar" :alt="scope.row.member_nickname">
                     </template>
                 </el-table-column>
-                <el-table-column header-align="center" align="center" prop="userAccount" label="用户账号"></el-table-column>
+                <el-table-column header-align="center" align="center" prop="member_name" label="用户账号"></el-table-column>
 
                 <el-table-column header-align="center" align="center" label="用户信息">
                     <template slot-scope="scope">
-                        <p>{{scope.row.userName}}</p>
-                        <p>{{scope.row.userTel}}</p>
+                        <p>{{scope.row.member_truename}}</p>
+                        <p>{{scope.row.member_mobile}}</p>
                     </template>
                 </el-table-column>
-                <el-table-column header-align="center" align="center" prop="nickName" label="昵称"></el-table-column>
+                <el-table-column header-align="center" align="center" prop="member_nickname" label="昵称"></el-table-column>
+                <el-table-column header-align="center" align="center" prop="create_time" label="注册时间"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="orderNum" label="订单总数">
                     <template slot-scope="scope">
                         <router-link to="/order/index">{{scope.row.orderNum}}</router-link>
@@ -45,7 +46,11 @@
                 </el-table-column>
 
             </el-table>
-
+            <el-pagination
+                layout="prev, pager, next"
+                @current-change="pageChange"
+                :total="totalPage">
+            </el-pagination>
         </div>
     </div>
 </template>
@@ -58,8 +63,6 @@
         data() {
             return {
                 searchForm: {
-                    userName: '',
-                    userTel: '',
                     userTypes:[
                         {
                             type:'1',
@@ -74,27 +77,28 @@
                             name:'用户手机号'
                         },
                     ],
-                    userType:'1'
+                    userType:'1',
+                    userVal: '',
                 },
-                userData: [
-                    {
-                        id: '1',
-                        userAccount:'tl2000',
-                        userName: 'qwk',
-                        userTel: '13798238693',
-                        orderNum:'10',
-                        nickName: '0的离心率',
-                        headerImg: '',
-
-                    }
-                ],
+                userData: [],
+                totalPage:1
             }
         },
         components: {BreadCrumb},
         mounted() {
-
+            this.getUserList()
         },
         methods: {
+            getUserList(){
+                this.$post('member/member_list',{
+                    search_field_name:this.searchForm.userType,
+                    search_field_value:this.searchForm.userVal
+                })
+                    .then(res=>{
+                        this.userData = res.data.list
+                        this.totalPage = res.data.last_page * 10
+                    })
+            },
             seeUser(e) {
                 console.log(e)
                 this.$router.push('/user/watchUser')
@@ -116,6 +120,9 @@
                     .catch((err) => {
                         this.$message.info('取消删除')
                     })
+            },
+            pageChange(val) {
+
             }
         }
     }

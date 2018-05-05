@@ -5,28 +5,28 @@
         <el-row>
             <el-col :span="6" :offset="1">
                 <router-link to="/ticket/index">
-                    <i></i>
+                    <i class="ticket"></i>
                     <p>门票管理(100)</p>
                 </router-link>
             </el-col>
 
             <el-col :span="6" :offset="1">
                 <router-link to="/equip/index">
-                    <i></i>
+                    <i class="equip"></i>
                     <p>装备管理(100)</p>
                 </router-link>
             </el-col>
 
             <el-col :span="6" :offset="1">
                 <router-link to="/order/index">
-                    <i></i>
+                    <i class="order"></i>
                     <p>订单管理(100)</p>
                 </router-link>
             </el-col>
 
             <el-col :span="6" :offset="1">
                 <router-link to="/user/index">
-                    <i></i>
+                    <i class="user"></i>
                     <p>用户管理(100)</p>
                 </router-link>
             </el-col>
@@ -71,7 +71,6 @@
                 width: 80px;
                 height: 80px;
                 margin: 20px;
-                border: 1px solid red;
             }
             p {
                 padding: 0 0 10px;

@@ -86,7 +86,11 @@
                     </template>
                 </el-table-column>
             </el-table>
-
+            <el-pagination
+                layout="prev, pager, next"
+                @current-change="pageChange"
+                :total="totalPage">
+            </el-pagination>
         </div>
     </div>
 </template>
@@ -134,6 +138,7 @@
                         payStatus: '支付成功'
                     }
                 ],
+                totalPage:1
             }
         },
         components: {BreadCrumb},
@@ -158,6 +163,10 @@
                     .catch((err) => {
                         this.$message.info('取消删除')
                     })
+            },
+            // 改变当前页
+            pageChange(val) {
+                alert(val)
             }
         }
     }

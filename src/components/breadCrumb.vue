@@ -63,6 +63,9 @@
                     case 'addEquip':
                         this.navName2 = '添加装备'
                         break;
+                    case 'editEquip':
+                        this.navName2 = '编辑装备'
+                        break;
                     case 'addEquipType':
                         this.navName2 = '添加装备分类'
                         break;

@@ -3,113 +3,76 @@
         <bread-crumb :path="this.$route.path"></bread-crumb>
         <div class="container">
             <el-form :model="addRuleForm" :rules="addRule" ref="addRuleForm" label-width="140px" class="demo-ruleForm">
-                <el-form-item label="装备名称：" prop="equipName">
-                    <el-input v-model="addRuleForm.equipName" placeholder="请输入装备名称"></el-input>
+                <el-form-item label="装备名称：" prop="equip_name">
+                    <el-input v-model="addRuleForm.equip_name" placeholder="请输入装备名称"></el-input>
+                </el-form-item>
+                <el-form-item label="装备价格：" prop="price">
+                    <el-input v-model="addRuleForm.price" placeholder="请输入装备价格"></el-input>
                 </el-form-item>
 
-                <el-form-item label="装备介绍：" prop="introduce">
-                    <el-input type="textarea" :rows="3" v-model="addRuleForm.introduce"
-                              placeholder="请填写装备介绍"></el-input>
+                <el-form-item label="装备分类：" prop="classify_id">
+                    <el-select v-model="addRuleForm.classify_id" placeholder="请选择装备分类" @change="classChange">
+                        <el-option
+                            v-for="item,index in classify"
+                            :key="item.class_id"
+                            :label="item.class_name"
+                            :value="item.class_id"></el-option>
+                    </el-select>
                 </el-form-item>
-                <el-form-item label="图片上传：" prop="dialogImageUrl">
-                    <el-upload
-                        action="#"
-                        list-type="picture-card"
-                        :on-preview="handlePictureCardPreview">
-                        <i class="el-icon-plus"></i>
-                    </el-upload>
-                    <el-dialog :visible.sync="dialogVisible">
-                        <img width="100%" :src="addRuleForm.dialogImageUrl" alt="">
-                    </el-dialog>
+                <el-form-item label="装备用途：" prop="purpose">
+                    <el-input v-model="addRuleForm.purpose" placeholder="请输入装备用途"></el-input>
                 </el-form-item>
-                <el-form-item label="注意说明：" prop="tip">
-                    <el-input type="textarea" :rows="3" v-model="addRuleForm.tip" placeholder="请填写注意说明（选填）"></el-input>
+                <el-form-item label="是否为热销产品：" prop="is_hot">
+                    <el-radio-group v-model="addRuleForm.is_hot" @change="isHotChange">
+                        <el-radio :label="1" border>是</el-radio>
+                        <el-radio :label="2" border>否</el-radio>
+                    </el-radio-group>
                 </el-form-item>
-                <!--
-                                <el-form-item label="设置商品规格：" prop="spec">
-                                    <el-radio-group v-model="addRuleForm.spec" @change="specChoose">
-                                        <el-radio label="1" border>单规格</el-radio>
-                                        <el-radio label="2" border>双规格</el-radio>
-                                    </el-radio-group>
-                                </el-form-item>
-                                <el-form-item prop="spec1">
-                                    <el-select v-model="addRuleForm.spec1" @change="spec1Choose">
-                                        <el-option
-                                            v-for="item in specList"
-                                            :key="item.id"
-                                            :label="item.label"
-                                            :value="item.label"></el-option>
-                                    </el-select>
-                                    <el-tag
-                                        :key="tag"
-                                        v-for="tag in tags1"
-                                        closable
-                                        :disable-transitions="false"
-                                        @close="tagClose1(tag)">{{tag}}
-                                    </el-tag>
-                                    <el-input
-                                        class="input-new-tag"
-                                        v-if="inputVisible1"
-                                        v-model="inputVal1"
-                                        ref="saveTagInput1"
-                                        @keyup.enter.native="saveInputVal1"
-                                        @blur="saveInputVal1"></el-input>
-                                    <el-button v-else class="button-new-tag" @click="showInput1">+添加</el-button>
-                                </el-form-item>
+                <el-form-item label="是否为特卖产品：" prop="is_sale">
+                    <el-radio-group v-model="addRuleForm.is_sale" @change="isSaleChange">
+                        <el-radio :label="1" border>是</el-radio>
+                        <el-radio :label="2" border>否</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="特卖价格：" prop="sale_price" v-if="addRuleForm.is_sale=='1'">
+                    <el-input v-model.number="addRuleForm.sale_price" placeholder="请设置门票特卖价格"></el-input>
+                </el-form-item>
+                <el-form-item label="装备展示图片：">
+                    <div class="imgsList" v-if="addRuleForm.dialogImageUrlArr">
+                        <div class="imgDiv" v-for="item,index in addRuleForm.dialogImageUrlArr">
+                            <img :src="item" alt="" @mouseover="mouseShow(item,index)" >
+                            <div class="dialogBg" v-if="index==currentIndex" @mouseout="mouseHide(item,index)"></div>
+                            <i class="el-icon-delete" v-if="index==currentIndex" @click="deleteImg(val,index)"></i>
+                        </div>
 
-                                <el-form-item prop="spec2" v-if="this.addRuleForm.spec == '2'">
-                                    <el-select v-model="addRuleForm.spec2" @change="spec2Choose">
-                                        <el-option
-                                            v-for="item in specList"
-                                            :key="item.id"
-                                            :label="item.label"
-                                            :value="item.label"></el-option>
-                                    </el-select>
-                                    <el-tag
-                                        :key="tag"
-                                        v-for="tag in tags2"
-                                        closable
-                                        :disable-transitions="false"
-                                        @close="tagClose2(tag)">{{tag}}
-                                    </el-tag>
-                                    <el-input
-                                        class="input-new-tag"
-                                        v-if="inputVisible2"
-                                        v-model="inputVal2"
-                                        ref="saveTagInput2"
-                                        @keyup.enter.native="saveInputVal2"
-                                        @blur="saveInputVal2"></el-input>
-                                    <el-button v-else class="button-new-tag" @click="showInput2">+添加</el-button>
-                                </el-form-item>
+                    </div>
+                    <div class="addImgBtn">
+                        <input type="file" multiple @change="imgUpload">
+                        <el-button icon="el-icon-plus"></el-button>
+                    </div>
+                    <div class="tip">
+                        <p>上传图片只能为jpg、jpeg、png格式！</p>
+                        <p>上传图片大小不能超过1M！</p>
+                    </div>
+                </el-form-item>
+                <el-form-item label="装备说明图片：">
+                    <div class="imgsList" v-if="addRuleForm.remarkImageUrlArr">
+                        <div class="imgDiv" v-for="item,index in addRuleForm.remarkImageUrlArr">
+                            <img :src="item" alt="" @mouseover="mouseRemarkShow(item,index)" >
+                            <div class="dialogBg" v-if="index==currentRemarkIndex" @mouseout="mouseRemarkHide(item,index)"></div>
+                            <i class="el-icon-delete" v-if="index==currentRemarkIndex" @click="deleteRemarkImg(item,index)"></i>
+                        </div>
 
-
-                                <el-form-item label="规格尺寸价格图片：">
-                                    <table>
-                                        <thead>
-                                        <tr>
-                                            <td v-if="this.addRuleForm.spec2">{{addRuleForm.spec2}}</td>
-                                            <td v-if="this.addRuleForm.spec1">{{addRuleForm.spec1}}</td>
-                                            <td>当前库存</td>
-                                            <td>设置库存</td>
-                                            <td>价格</td>
-                                            <td>SKU缩略图</td>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr v-for="item in tbodyes">
-                                            <td v-if="addRuleForm.spec1">{{item.spec1}}</td>
-                                            <td><span>{{item.currentStorage}}</span></td>
-                                            <td>
-                                                <el-input v-model="item.setStorage" size="small" placeholder="设置当前库存"></el-input>
-                                            </td>
-                                            <td>
-                                                <el-input v-model="item.price" size="small" placeholder="设置价格"></el-input>
-                                            </td>
-                                            <td>1111</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </el-form-item>-->
+                    </div>
+                    <div class="addImgBtn">
+                        <input type="file" multiple @change="imgRemarkUpload">
+                        <el-button icon="el-icon-plus"></el-button>
+                    </div>
+                    <div class="tip">
+                        <p>上传图片只能为jpg、jpeg、png格式！</p>
+                        <p>上传图片大小不能超过1M！</p>
+                    </div>
+                </el-form-item>
                 <el-form-item>
                     <el-button type="danger" @click="submitForm('addRuleForm')">添加</el-button>
                     <el-button @click="resetForm('addRuleForm')">重置</el-button>
@@ -125,160 +88,207 @@
     export default {
         name: "add-equip",
         data() {
+            var checkPrice = (rule, val, cb) => {
+                if (val == '') {
+                    cb(new Error('请设置装备价格！'))
+                } else if (isNaN(val)||val < 0) {
+                    cb(new Error('价格必须为大于0的数字！'))
+                } else {
+                    cb();
+                }
+            }
             return {
                 addRuleForm: {
-                    ticketName: '',
-                    address: '',
-                    ticketNum: '',
-                    startNum: 1,
-                    startTime: '',
-                    introduce: '',
-                    dialogImageUrl: '',
-                    tip: '',
-                    spec: '1',
-                    spec1: '',
-                    spec2: '',
+                    equip_name: '',         // 装备名称
+                    price:'',               // 装备价格
+                    purpose:'',             // 装备用途
+                    classify_id:'',         // 装备分类id
+                    classify_name:'',       // 装备分类名称
+                    is_hot: 1,              // 是否为热销产品
+                    is_sale: 1,             // 是否为特卖产品
+                    sale_price: '0',        // 特卖价格
+                    dialogImageUrl: '',             // 图片当前url      -- 产品图
+                    dialogImageUrlArr: [],          // 图片url数组
+                    dialogImageId:'',               // 图片当前id
+                    dialogImageIdArr:[],            // 图片id数组
+
+                    remarkImageUrl:'',              // 说明图
+                    remarkImageUrlArr:[],
+                    remarkImageId:'',
+                    remarkImageIdArr:[],
+
                 },
-                specList: [
-                    {
-                        id: '1',
-                        label: '规格1'
-                    },
-                    {
-                        id: '2',
-                        label: '规格2'
-                    },
-                    {
-                        id: '3',
-                        label: '规格3'
-                    }
-                ],
+                classify:[],            // 分类
+
                 addRule: {
-                    equipName: [
-                        {required: true, message: '请输入门票名称', trigger: 'blur'}
+                    equip_name: [
+                        {required: true, message: '请输入装备名称', trigger: 'blur'}
+                    ],
+                    price: [
+                        {required: true, validator: checkPrice, trigger: 'blur'}
+                    ],
+                    classify_id: [
+                        {required: true, message: '请选择装备分类', trigger: 'change'}
                     ],
                     introduce: [
-                        {required: true, message: '请填写景点介绍', trigger: 'blur'}
+                        {required: true, message: '请填写装备介绍', trigger: 'blur'}
                     ]
                 },
-                dialogVisible: false,        // 图片
-                tags1: [],        // 标签数组
-                inputVisible1: false,
-                inputVal1: '',
-                tags2: [],        // 标签数组
-                inputVisible2: false,
-                inputVal2: '',
+                currentIndex:-1,            // 显示哪一个
+                currentRemarkIndex:-1,            // 显示哪一个
 
-                tbodyes: [],
+
             }
         },
         components: {BreadCrumb},
         mounted() {
-
+            this.getEquipClassify()
         },
         methods: {
-            // 上传图片
-            handlePictureCardPreview() {
-
+            // 获取装备分类
+            getEquipClassify() {
+                this.$post('equip/class_list')
+                    .then(res=>{
+                        this.classify = res.data
+                console.log(res)
+                    })
             },
-            // 规格种类选择，是一种还是两种规格
-            specChoose(e) {
-                this.$alert('商品规格会清空', '提示', {
-                    confirmButtonText: '确认',
-                    callback: action => {
-                        this.addRuleForm.spec1 = ''
-                        this.addRuleForm.spec2 = ''
-                        this.tbodyes = []
+            // 改变装备分类选择
+            classChange(val) {
+                this.addRuleForm.classify_id = val
+                for(let i=0;i<this.classify.length;i++) {
+                    if (this.classify[i].class_id == this.addRuleForm.classify_id) {
+                        this.addRuleForm.classify_name = this.classify[i].class_name
+                    }
+
+                }
+            },
+            // 是否热销
+            isHotChange(val) {
+                this.addRuleForm.is_hot = val
+            },
+            // 是否热卖
+            isSaleChange(val) {
+                this.addRuleForm.is_sale = val
+                this.addRuleForm.sale_price = '0'
+            },
+            // 产品图
+            // 显示隐藏删除按钮
+            mouseShow(val,index) {
+                this.currentIndex = index
+            },
+            mouseHide(val,index) {
+                this.currentIndex = -1
+            },
+            // 删除图片
+            deleteImg(val,index) {
+                this.addRuleForm.dialogImageUrlArr.splice(index,1)
+                this.addRuleForm.dialogImageIdArr.splice(index,1)
+            },
+            // 上传图片
+            imgUpload(e) {
+                e.preventDefault();
+                let fileArr = e.target.files
+                for (let i=0;i<fileArr.length;i++) {
+                    const type = fileArr[i].type
+                    const size = fileArr[i].size/1024/1024
+                    if (!(type != 'image/jpg'||'image/png'||'image/jpeg')) {
+                        this.$message.error('上传图片只能为jpg、jpeg、png格式！')
+                        return;
+                    } else if (size>1) {
+                        this.$message.error('上传图片大小不能超过1M！')
+                        return;
+                    } else {
+                        let data = new FormData();
+                        data.append('image',fileArr[i])
+                        data.append('type',2)
+                        this.$upload('other/Img/upload',data)
+                            .then(res=>{
+                                this.addRuleForm.dialogImageUrl = res.url
+                                this.addRuleForm.dialogImageId = res.id
+                                this.addRuleForm.dialogImageUrlArr.push(this.addRuleForm.dialogImageUrl)
+                                this.addRuleForm.dialogImageIdArr.push(this.addRuleForm.dialogImageId)
+                            })
+                    }
+                }
+            },
+            // 说明图
+            // 显示隐藏删除按钮
+            mouseRemarkShow(val,index) {
+                this.currentRemarkIndex = index
+            },
+            mouseRemarkHide(val,index) {
+                this.currentRemarkIndex = -1
+            },
+            // 删除图片
+            deleteRemarkImg(val,index) {
+                this.addRuleForm.remarkImageUrlArr.splice(index,1)
+                this.addRuleForm.remarkImageIdArr.splice(index,1)
+            },
+            imgRemarkUpload(e) {
+                e.preventDefault();
+                let fileArr = e.target.files
+                for (let i=0;i<fileArr.length;i++) {
+                    const type = fileArr[i].type
+                    const size = fileArr[i].size/1024/1024
+                    if (!(type != 'image/jpg'||'image/png'||'image/jpeg')) {
+                        this.$message.error('上传图片只能为jpg、jpeg、png格式！')
+                        return;
+                    } else if (size>1) {
+                        this.$message.error('上传图片大小不能超过1M！')
+                        return;
+                    } else {
+                        let data = new FormData();
+                        data.append('image',fileArr[i])
+                        data.append('type',3)
+                        this.$upload('other/Img/upload',data)
+                            .then(res=>{
+                            this.addRuleForm.remarkImageUrl = res.url
+                        this.addRuleForm.remarkImageId = res.id
+                        this.addRuleForm.remarkImageUrlArr.push(this.addRuleForm.remarkImageUrl)
+                        this.addRuleForm.remarkImageIdArr.push(this.addRuleForm.remarkImageId)
+                    })
+                    }
+                }
+            },
+            addEquipData() {
+                this.$post('equip/equip_add_update',{
+                    equip_name:this.addRuleForm.equip_name,
+                    price:this.addRuleForm.price,
+                    purpose:this.addRuleForm.purpose,
+                    classify_id:this.addRuleForm.classify_id,
+                    classify_name:this.addRuleForm.classify_name,
+                    is_hot:this.addRuleForm.is_hot,
+                    is_sale:this.addRuleForm.is_sale,
+                    sale_price:this.addRuleForm.sale_price,
+                    images:JSON.stringify(this.addRuleForm.dialogImageIdArr),
+                    introduce_images:JSON.stringify(this.addRuleForm.remarkImageIdArr)
+                })
+                    .then(res=>{
+                        this.$confirm('添加成功', '提示', {
+                            confirmButtonText: '继续添加',
+                            cancelButtonText: '回到装备页',
+                            type: 'success'
+                        })
+                            .then(() => {
+                                this.$router.push('addEquip')
+                            })
+                            .catch((err) => {
+                                this.$router.push('/equip')
+                            })
+                    })
+            },
+            submitForm(formName) {
+                this.$refs[formName].validate((valid)=>{
+                    if (valid) {
+                        this.addEquipData()
+                    } else {
+                        return;
                     }
                 })
             },
-            // spec1选择
-            spec1Choose(val) {
-                if (this.addRuleForm.spec1 == this.addRuleForm.spec2) {
-                    this.$message.error('规格1与规格2不能相同！')
-                    this.addRuleForm.spec1 == ''
-                } else {
-                    this.addRuleForm.spec1 = val
-
-                }
-
-            },
-            // spec2选择
-            spec2Choose(val) {
-                if (this.addRuleForm.spec2 == this.addRuleForm.spec1) {
-                    this.$message.error('规格1与规格2不能相同！')
-                    this.addRuleForm.spec2 == ''
-                } else {
-                    this.addRuleForm.spec2 = val
-                }
-            },
-
-            // 删除添加de标签
-            tagClose1(tag) {
-                this.tags1.splice(this.tags1.indexOf(tag), 1)
-            },
-            // 显示标签输入框
-            showInput1() {
-                if (this.addRuleForm.spec1) {
-                    this.inputVisible1 = true;
-                    this.$nextTick(_ => {
-                        this.$refs.saveTagInput1.$refs.input.focus()
-                    })
-                } else {
-                    this.$message.warning('请先选择规格1')
-                }
-
-            },
-            // 保存输入内容
-            saveInputVal1() {
-                let list1 = {}
-                if (this.inputVal1) {
-                    this.tags1.push(this.inputVal1)
-                }
-                // console.log(this.tags1)
-                this.inputVisible1 = false
-                this.inputVal1 = ''
-
-                for (let i = 0; i < this.tags1.length; i++) {
-                    console.log(this.tags1.length)
-                    list1 = {
-                        'spec1': this.tags1[i],
-                        'currentStorage': '0',
-                        'setStorage': '',
-                        'price': '',
-                    }
-                    console.log(list1)
-
-                }
-                // console.log(list1)
-                this.tbodyes.push(list1)
-
-                console.log(this.tbodyes)
-
-            },
-            // 删除添加de标签
-            tagClose2(tag) {
-                this.tags2.splice(this.tags2.indexOf(tag), 1)
-            },
-            // 显示标签输入框
-            showInput2() {
-                if (this.addRuleForm.spec2) {
-                    this.inputVisible2 = true;
-                    this.$nextTick(_ => {
-                        this.$refs.saveTagInput2.$refs.input.focus()
-                    })
-                } else {
-                    this.$message.warning('请先选择规格2')
-                }
-
-            },
-            // 保存输入内容
-            saveInputVal2() {
-                if (this.inputVal2) {
-                    this.tags2.push(this.inputVal2)
-                }
-                this.inputVisible2 = false
-                this.inputVal2 = ''
+            resetForm(formName) {
+                this.$refs[formName].resetFields();
             }
 
         }
@@ -303,21 +313,64 @@
             .el-button {
                 float: left;
             }
-            .el-tag + .el-tag {
-                margin-left: 10px;
+            .imgsList {
                 float: left;
+                margin-right: 20px;
+                .imgDiv {
+                    position: relative;
+                    display: inline-block;
+                    width: 160px;
+                    height: 160px;
+                    margin-right: 10px;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                    .dialogBg {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        top: 0;
+                        left: 0;
+                        background-color: rgba(0,0,0,.2);
+                    }
+                    i {
+                        position: absolute;
+                        font-size: 40px;
+                        left: 50%;
+                        margin-left: -20px;
+                        top: 50%;
+                        margin-top: -20px;
+                        cursor: pointer;
+                        z-index: 9;
+                        color: #fff;
+                    }
+                }
             }
-            .el-tag {
-                margin-left: 10px;
+            .addImgBtn {
                 float: left;
-            }
-            .button-new-tag {
-                margin-left: 10px;
-            }
-            .input-new-tag {
-                width: 100px;
-                margin-left: 10px;
-                vertical-align: middle;
+                position: relative;
+                overflow: hidden;
+                width: 160px;
+                height: 160px;
+                input {
+                    width: 160px;
+                    height: 160px;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    opacity: 0;
+                    z-index: 9;
+                }
+                .el-button {
+                    width: 160px;
+                    height: 160px;
+                    border: 1px dashed #ccc;
+                    .el-icon-plus {
+                        font-size: 40px;
+                    }
+
+                }
             }
             table {
                 width: 100%;
@@ -341,11 +394,11 @@
     }
 </style>
 <style lang="scss">
-    .el-upload {
-        float: left;
-    }
-
-    .el-upload--picture-card {
-        float: left;
+    .addImgBtn {
+        .el-button {
+            i {
+                font-size: 40px;
+            }
+        }
     }
 </style>

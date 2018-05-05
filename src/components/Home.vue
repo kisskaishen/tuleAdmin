@@ -22,35 +22,35 @@
             <el-container>
                 <el-aside width="200px">
                     <el-menu
-                        default-active="/index/index"
+                        :default-active="$route.path"
                         class="el-menu-vertical-demo"
                         router
                         @open="handleOpen"
                         @close="handleClose">
                         <el-menu-item index="/index/index">
-                            <i class="el-icon-menu"></i>
+                            <i class="index"></i>
                             <span slot="title">首页概览</span>
                         </el-menu-item>
                         <el-menu-item index="/ticket/index">
-                            <i class="el-icon-menu"></i>
+                            <i class="ticket"></i>
                             <span slot="title">门票管理</span>
                         </el-menu-item>
                         <el-menu-item index="/equip/index">
-                            <i class="el-icon-menu"></i>
+                            <i class="equip"></i>
                             <span slot="title">装备管理</span>
                         </el-menu-item>
                         <el-menu-item index="/order/index">
-                            <i class="el-icon-menu"></i>
+                            <i class="order"></i>
                             <span slot="title">订单管理</span>
                         </el-menu-item>
                         <el-menu-item index="/user/index">
-                            <i class="el-icon-menu"></i>
+                            <i class="user"></i>
                             <span slot="title">用户管理</span>
                         </el-menu-item>
                     </el-menu>
                 </el-aside>
                 <el-main>
-                    <transition name="el-fade-in">
+                    <transition name="el-fade-out-linear">
                         <router-view></router-view>
                     </transition>
                 </el-main>
@@ -113,7 +113,7 @@
                     width: 60px;
                     height: 60px;
                     margin-right: 20px;
-                    background: url("../assets/logotule.png") no-repeat center /100%;
+                    background: url("../images/logotule.png") no-repeat center /100%;
                 }
             }
         }
@@ -123,10 +123,36 @@
 
     .el-aside {
         background-color: #fff;
+        .el-menu-item {
+            i {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                vertical-align: middle;
+            }
+        }
+        .is-active {
+            .index {
+                background: url("../images/index-active.png") no-repeat center /100%;
+            }
+            .ticket {
+                background: url("../images/ticket-active.png") no-repeat center /100%;
+            }
+            .equip {
+                background: url("../images/equip-active.png") no-repeat center /100%;
+            }
+            .order {
+                background: url("../images/order-active.png") no-repeat center /100%;
+            }
+            .user {
+                background: url("../images/user-active.png") no-repeat center /100%;
+            }
+        }
     }
-
     .el-main {
         background-color: #fff;
         margin: 20px 0 0 20px;
     }
+
+
 </style>

@@ -8,6 +8,21 @@ body {
 i {
     display: block;
 }
+.index {
+    background: url("../images/index.png") no-repeat center /100%;
+}
+.ticket {
+    background: url("../images/ticket.png") no-repeat center /100%;
+}
+.equip {
+    background: url("../images/equip.png") no-repeat center /100%;
+}
+.order {
+    background: url("../images/order.png") no-repeat center /100%;
+}
+.user {
+    background: url("../images/user.png") no-repeat center /100%;
+}
 a {
     color: #333;
     text-decoration: none;
@@ -33,4 +48,10 @@ img {
 }
 .info {
     color: #909399;
+}
+.tip p {
+    color: #f56c6c;
+    font-size: 12px;
+    text-align: left;
+    line-height: 20px;
 }

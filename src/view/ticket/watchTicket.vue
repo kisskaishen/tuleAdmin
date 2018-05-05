@@ -2,33 +2,42 @@
     <div>
         <bread-crumb :path="this.$route.path"></bread-crumb>
         <div class="container">
-            <el-form label-width="120px" label-position="right" class="demo-ruleForm">
+            <el-form label-width="140px" label-position="right" class="demo-ruleForm">
                 <el-form-item label="门票名称：">
-                    <span>{{ticketInfo.ticketName}}</span>
+                    <span>{{ticketInfo.ticket_name}}</span>
                 </el-form-item>
                 <el-form-item label="景点地址：">
-                    <span>{{ticketInfo.address}}</span>
+                    <span>{{ticketInfo.narea}}</span>
+                </el-form-item>
+                <el-form-item label="票价：">
+                    <span>{{ticketInfo.price}}元</span>
                 </el-form-item>
                 <el-form-item label="总票数：">
-                    <span>{{ticketInfo.ticketNum}}</span>
+                    <span>{{ticketInfo.delivery_num}}</span>
                 </el-form-item>
-                <el-form-item label="出发频率：">
-                    <span>{{ticketInfo.startNumTxt}}</span>
+                <el-form-item label="是否为热销产品：">
+                    <span>{{ticketInfo.is_hot=='1'?'是':'否'}}</span>
                 </el-form-item>
-                <el-form-item label="出发时间：" v-if="startTimeShow">
-                    <span>{{ticketInfo.startTime}}</span>
+                <el-form-item label="是否为特卖产品：">
+                    <span>{{ticketInfo.is_sale=='1'?'是':'否'}}</span>
+                </el-form-item>
+                <el-form-item label="发团类型：">
+                    <span>{{ticketInfo.leave_type=='1'?'每日发团':'固定时间发团'}}</span>
+                </el-form-item>
+                <el-form-item label="出发时间：" v-if="ticketInfo.leave_type=='2'">
+                    <span>{{ticketInfo.leave_date}}</span>
                 </el-form-item>
                 <el-form-item label="景点介绍：">
                     <span>{{ticketInfo.introduce}}</span>
                 </el-form-item>
                 <el-form-item label="图片上传：">
-                    <img src="" alt="">
+                    <img :src="item.image" alt="" v-for="item,index in ticketInfo.images">
                 </el-form-item>
                 <el-form-item label="注意说明：">
-                    <span>{{ticketInfo.tip}}</span>
+                    <span>{{ticketInfo.attention}}</span>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="danger"><router-link to="/ticket/editTicket">去修改</router-link></el-button>
+                    <el-button type="danger"><router-link :to="'editTicket?ticket_id='+this.$route.query.ticket_id">去修改</router-link></el-button>
                     <el-button><router-link to="/ticket/index">门票管理</router-link></el-button>
                 </el-form-item>
             </el-form>
@@ -43,26 +52,22 @@
         name: "watch-ticket",
         data() {
             return {
-                ticketInfo: {
-                    ticketName: '门票名称',
-                    address: '焦作武陟',
-                    ticketNum: '20',
-                    startNum:-1,
-                    startNumTxt:'每天',
-
-                    introduce: '这里是介绍',
-                    dialogImageUrl: '',
-                    tip: '',
-                },
-                startTimeShow:this.startNum == '-1'?true:false
+                ticketInfo: {},
             }
         },
         components: {BreadCrumb},
         mounted() {
-
+            this.getInfo()
         },
         methods: {
-
+            getInfo() {
+                this.$post('ticket/ticket_detail',{
+                    ticket_id:this.$route.query.ticket_id
+                })
+                    .then(res=>{
+                        this.ticketInfo = res.data
+                    })
+            },
         }
     }
 </script>

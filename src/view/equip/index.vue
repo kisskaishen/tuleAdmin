@@ -33,20 +33,24 @@
             </el-form>
             <el-table :data="equipData" style="width: 100%;" size="medium" highlight-current-row
                       :default-sort="{prop:'startTime'}">
-                <el-table-column header-align="center" align="center" prop="equipName" label="装备名称"></el-table-column>
-                <el-table-column header-align="center" align="center" prop="equipUse" label="装备用途"></el-table-column>
-                <el-table-column header-align="center" align="center" prop="equipType" label="装备分类"></el-table-column>
-                <el-table-column header-align="center" align="center" prop="equipPrice"
+                <el-table-column header-align="center" align="center" prop="equip_name" label="装备名称"></el-table-column>
+                <el-table-column header-align="center" align="center" prop="purpose" label="装备用途"></el-table-column>
+                <el-table-column header-align="center" align="center" prop="classify_name" label="装备分类"></el-table-column>
+                <el-table-column header-align="center" align="center" prop="price"
                                  label="价格"></el-table-column>
                 <el-table-column header-align="center" align="center" label="操作">
                     <template slot-scope="scope">
-                        <el-button size="small" plain @click="seeTicket(scope)">查看</el-button>
-                        <el-button type="primary" size="small" plain @click="editTicket(scope)">编辑</el-button>
-                        <el-button type="danger" size="small" plain @click="deleteTicket(scope)">删除</el-button>
+                        <el-button size="small" plain @click="seeTicket(scope.row)">查看</el-button>
+                        <el-button type="primary" size="small" plain @click="editTicket(scope.row)">编辑</el-button>
+                        <el-button type="danger" size="small" plain @click="deleteTicket(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
-
+            <el-pagination
+                layout="prev, pager, next"
+                @current-change="pageChange"
+                :total="totalPage">
+            </el-pagination>
         </div>
     </div>
 </template>
@@ -61,62 +65,70 @@
                 searchForm: {
                     equipName: '',
                     equipUse: '',
-                    equipTypes:[
+                    equipTypes: [
                         {
-                            id:'0',
-                            label:'全部分类'
+                            id: '0',
+                            label: '全部分类'
                         },
                         {
-                            id:'1',
-                            label:'分类1'
+                            id: '1',
+                            label: '分类1'
                         },
                         {
-                            id:'2',
-                            label:'分类2'
+                            id: '2',
+                            label: '分类2'
                         },
                         {
-                            id:'3',
-                            label:'分类3'
+                            id: '3',
+                            label: '分类3'
                         }
                     ],
                     equipType: '0',
                 },
-                equipData: [
-                    {
-                        id: '1',
-                        equipName: '骆驼登山靴',
-                        equipUse: '山地、徒步',
-                        equipType:'分类1',
-                        equipSize: 'L/M/XL/XXL',
-                        equipNum: '40',
-                        restNum: '20',
-                        equipPrice: '¥120'
-                    },
-                    {
-                        id: '2',
-                        equipName: '骆驼登山靴',
-                        equipUse: '山地、徒步',
-                        equipType:'分类2',
-                        equipSize: 'L/M/XL/XXL',
-                        equipNum: '40',
-                        restNum: '20',
-                        equipPrice: '¥120'
-                    }
-                ],
+                equipData: [],
+                totalPage:1
             }
         },
         components: {BreadCrumb},
         mounted() {
-
+            this.getList()
+            this.getEquipClassify()
         },
         methods: {
+            // 装备列表
+            getList() {
+                this.$post('equip/equip_list', {
+                    equip_name:this.searchForm.equipName,
+                    purpose:this.searchForm.equipUse,
+                    classify_name:this.searchForm.equipType,
+                })
+                    .then(res => {
+                        this.equipData = res.data.list
+                        this.totalPage = res.data.last_page * 10
+                    })
+            },
+            // 装备分类
+            getEquipClassify() {
+                this.$post('equip/class_list')
+                    .then(res => {
+                    this.classify = res.data
+                })
+            },
             seeTicket(e) {
-                console.log(e)
-                this.$router.push('/equip/watchEquip')
+                this.$router.push({
+                    path:'/equip/watchEquip',
+                    query:{
+                        equip_id:e.equip_id
+                    }
+                })
             },
             editTicket(e) {
-                console.log(e)
-                this.$router.push('/equip/editEquip')
+                this.$router.push({
+                    path:'/equip/editEquip',
+                    query:{
+                        equip_id:e.equip_id
+                    }
+                })
             },
             deleteTicket(e) {
                 this.$confirm('确认删除此条信息？', '提示', {
@@ -125,12 +137,21 @@
                     type: 'warning'
                 })
                     .then((res) => {
-                        this.equipData.splice(e.$index,1)
-                        this.$message.success('删除成功')
+                        this.$post('equip/equip_del',{
+                            equip_id:e.equip_id
+                        })
+                            .then(res=>{
+                                this.equipData.splice(e.$index, 1)
+                                this.$message.success('删除成功')
+                            })
                     })
                     .catch((err) => {
                         this.$message.info('取消删除')
                     })
+            },
+            // 改变当前页
+            pageChange(val) {
+                alert(val)
             }
         }
     }
@@ -163,6 +184,7 @@
                 margin: 0;
                 padding: 4px;
             }
+
         }
     }
 </style>
