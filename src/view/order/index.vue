@@ -54,32 +54,29 @@
             </el-form>
             <el-table :data="orderData" style="width: 100%;" size="medium" highlight-current-row>
                 <el-table-column header-align="center" align="center" prop="orderNum" label="订单号"></el-table-column>
-                <el-table-column header-align="center" align="center" width="160px" label="购买人">
+                <el-table-column header-align="center" align="center" label="购买人">
                     <template slot-scope="scope">
                         <el-button type="text">{{scope.row.orderPeople}}</el-button>
                         <el-button type="text">{{scope.row.orderTel}}</el-button>
                     </template>
                 </el-table-column>
-                <el-table-column header-align="center" align="center" width="100px"
-                                 label="商品名称">
+                <el-table-column header-align="center" align="center" label="商品名称">
                     <template slot-scope="scope">
                         <p>{{scope.row.ticketName}}</p>
                         <p>x{{scope.row.ticketNum}}</p>
                     </template>
                 </el-table-column>
-                <el-table-column header-align="center" align="center" width="100px" prop="payMoney"
-                                 label="支付金额"></el-table-column>
-                <el-table-column header-align="center" align="center" width="200px"
-                                 label="下单/支付时间">
+                <el-table-column header-align="center" align="center" prop="payMoney" label="支付金额"></el-table-column>
+                <el-table-column header-align="center" align="center" label="下单/支付时间">
                     <template slot-scope="scope">
                         <p>下单：{{scope.row.orderTime}}</p>
                         <p>支付：{{scope.row.payTime}}</p>
                     </template>
                 </el-table-column>
 
-                <el-table-column header-align="center" align="center" width="100px" prop="payStatus"
+                <el-table-column header-align="center" align="center" prop="payStatus"
                                  label="订单状态"></el-table-column>
-                <el-table-column header-align="center" align="center" width="120px" label="操作">
+                <el-table-column header-align="center" align="center" label="操作">
                     <template slot-scope="scope">
                         <el-button size="small" plain @click="seeOrder(scope)">查看</el-button>
                         <el-button type="danger" size="small" plain @click="deleteOrder(scope)">删除</el-button>
