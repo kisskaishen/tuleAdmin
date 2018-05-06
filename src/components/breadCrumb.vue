@@ -49,6 +49,9 @@
                     case 'user':
                         this.navName = '用户管理'
                         break;
+                    case 'banner':
+                        this.navName = 'banner管理'
+                        break;
                 }
                 switch (this.secondNav) {
                     case 'addTicket':
@@ -80,6 +83,9 @@
                         break;
                     case 'editUser':
                         this.navName2 = '编辑用户信息'
+                        break;
+                    case 'editBanner':
+                        this.navName2 = '编辑banner图'
                         break;
 
                 }

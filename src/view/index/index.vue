@@ -30,6 +30,13 @@
                     <p>用户管理(100)</p>
                 </router-link>
             </el-col>
+
+            <el-col :span="6" :offset="1">
+                <router-link to="/banner/index">
+                    <i class="banner"></i>
+                    <p>banner图管理(100)</p>
+                </router-link>
+            </el-col>
         </el-row>
     </div>
 </template>

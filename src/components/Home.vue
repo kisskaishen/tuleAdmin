@@ -47,6 +47,10 @@
                             <i class="user"></i>
                             <span slot="title">用户管理</span>
                         </el-menu-item>
+                        <el-menu-item index="/banner/index">
+                            <i class="banner"></i>
+                            <span slot="title">banner图管理</span>
+                        </el-menu-item>
                     </el-menu>
                 </el-aside>
                 <el-main>
@@ -143,6 +147,9 @@
             }
             .user {
                 background: url("../images/user-active.png") no-repeat center /100%;
+            }
+            .banner {
+                background: url("../images/banner-active.png") no-repeat center /100%;
             }
         }
     }

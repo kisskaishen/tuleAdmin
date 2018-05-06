@@ -25,6 +25,10 @@ const UserIndex = r => require.ensure([], () => r(require('@/view/user/index')),
 const EditUser = r => require.ensure([], () => r(require('@/view/user/editUser')), 'EditUser')
 const WatchUser = r => require.ensure([], () => r(require('@/view/user/watchUser')), 'WatchUser')
 
+const BannerIndex = r => require.ensure([], () => r(require('@/view/banner/index')), 'BannerIndex')
+const EditBanner = r => require.ensure([], () => r(require('@/view/banner/editBanner')), 'EditBanner')
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -47,8 +51,7 @@ export default new Router({
                         }
                     ]
                 },
-
-
+                // 门票管理
                 {
                     path: '/ticket',
                     component: TicketIndex,
@@ -71,6 +74,7 @@ export default new Router({
                     path: '/ticket/watchTicket',
                     component: WatchTicket,
                 },
+                // 装备管理
                 {
                     path: '/equip',
                     component: EquipIndex,
@@ -97,7 +101,7 @@ export default new Router({
                     path: '/equip/watchEquip',
                     component: WatchEquip,
                 },
-
+                // 订单管理
                 {
                     path: '/order',
                     component: OrderIndex,
@@ -113,6 +117,7 @@ export default new Router({
                     path: '/order/watchOrder',
                     component: WatchOrder,
                 },
+                // 用户管理
                 {
                     path: '/user',
                     component: UserIndex,
@@ -130,6 +135,21 @@ export default new Router({
                 {
                     path: '/user/watchOrder',
                     component: WatchOrder,
+                },
+                // banner图管理
+                {
+                    path: '/banner',
+                    component: BannerIndex,
+                    children: [
+                        {
+                            path: '/banner/index',
+                            component: BannerIndex
+                        }
+                    ]
+                },
+                {
+                    path: '/banner/editBanner',
+                    component: EditBanner,
                 },
             ]
         },
