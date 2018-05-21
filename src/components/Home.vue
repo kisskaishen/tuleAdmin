@@ -11,7 +11,7 @@
                     </router-link>
                     <div class="adminInfo">
                         <el-dropdown trigger="click" @command="outAdmin">
-                            <el-button><i class="el-icon-menu"></i>秦文凯</el-button>
+                            <el-button><i class="el-icon-menu"></i>{{$local.get('adminInfo').admin_name}}</el-button>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item command="out">退出登录</el-dropdown-item>
                             </el-dropdown-menu>
@@ -85,6 +85,7 @@
                         type: 'danger'
                     }).then(() => {
                         this.$message.success('退出成功')
+                        this.$local.delete('adminInfo')
                         this.$router.push('/login')
                     }).catch(() => {
                         this.$message.info('取消退出')

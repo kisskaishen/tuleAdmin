@@ -19,6 +19,9 @@
                 <el-form-item label="总票数：" prop="delivery_num">
                     <el-input v-model.number="editRuleForm.delivery_num" placeholder="请设置门票数量，如100表示100张"></el-input>
                 </el-form-item>
+                <el-form-item label="包含事项：" prop="content">
+                    <el-input v-model="content" type="textarea" :rows="4" placeholder="请填写此次活动的包含事项内容，如来回车费、食宿费用等"></el-input>
+                </el-form-item>
                 <el-form-item label="是否为热销产品：" prop="is_hot">
                     <el-radio-group v-model="editRuleForm.is_hot" @change="startNumChange">
                         <el-radio :label="1" border>是</el-radio>
@@ -55,13 +58,13 @@
                 <el-form-item label="图片上传：" prop="images">
                     <div class="imgsList" v-if="editRuleForm.images">
                         <div class="imgDiv" v-for="item,index in editRuleForm.images">
-                            <img :src="item.image" alt="" @mouseover="mouseShow(item,index)">
+                            <img :src="item.image || item.url" alt="" @mouseover="mouseShow(item,index)">
                             <div class="dialogBg" v-if="index==currentIndex" @mouseout="mouseHide(item,index)"></div>
                             <i class="el-icon-delete" v-if="index==currentIndex" @click="deleteImg(item,index)"></i>
                         </div>
 
                     </div>
-                    <div class="addImgBtn">
+                    <div class="addImgBtn" v-if="editRuleForm.images.length<4">
                         <input type="file" multiple @change="imgUpload">
                         <el-button icon="el-icon-plus"></el-button>
                     </div>
@@ -115,6 +118,7 @@
                     narea: '',
                     delivery_num: '',
                     price: '',
+                    content:'',
                     introduce: '',
                     attention: '',
                     is_hot: '',
@@ -134,8 +138,11 @@
                     narea: [
                         {required: true, message: '请输入景点地址', trigger: 'blur'}
                     ],
-                    price: [
+                    price:[
                         {required: true, validator: checkPrice, trigger: 'blur'}
+                    ],
+                    content: [
+                        {required: true, message: '请填写此次活动的包含内容', trigger: 'blur'}
                     ],
                     delivery_num: [
                         {required: true, validator: checkTicket, trigger: 'blur'}
@@ -238,6 +245,9 @@
                 })
                     .then(res => {
                         this.$message.success(res.message)
+                        setTimeout(()=>{
+                            this.$route.push('/ticket/index')
+                        },1200)
                     })
             },
             // 编辑门票接口提交

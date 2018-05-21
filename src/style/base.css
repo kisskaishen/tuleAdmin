@@ -38,6 +38,34 @@ li {
     background: url("../images/banner.png") no-repeat center /100%;
 }
 
+.indexActive {
+    background: url("../images/index-active.png") no-repeat center /100%;
+}
+
+.ticketActive {
+    background: url("../images/ticket-active.png") no-repeat center /100%;
+    transform: scale(1.2);
+}
+
+.equipActive {
+    background: url("../images/equip-active.png") no-repeat center /100%;
+    transform: scale(1.2);
+}
+
+.orderActive {
+    background: url("../images/order-active.png") no-repeat center /100%;
+    transform: scale(1.2);
+}
+
+.userActive {
+    background: url("../images/user-active.png") no-repeat center /100%;
+    transform: scale(1.2);
+}
+.bannerActive {
+    background: url("../images/banner-active.png") no-repeat center /100%;
+    transform: scale(1.2);
+}
+
 a {
     color: #333;
     text-decoration: none;

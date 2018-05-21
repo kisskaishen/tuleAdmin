@@ -18,10 +18,12 @@
                 <div class="bannerInfo">
                     <div class="info">
                         <span>跳转的商品ID：</span>
-                        <el-input v-model="goodsId" placeholder="跳转的商品id"></el-input>
+                        <el-input v-model="goodsId" placeholder="跳转的商品id" v-if="!goodsSpan"></el-input>
+                        <span v-else>{{goodsId}}</span>
                     </div>
                     <div class="info">
-                        <el-button type="danger">删除此banner图</el-button>
+                        <el-button :type="btnType" @click="changeType">{{btnName}}</el-button>
+                        <el-button type="danger">删除</el-button>
                     </div>
                 </div>
             </div>
@@ -41,6 +43,9 @@
                 bannerIdArr: [],
                 uploadData: {type: 1},        // 图片上传的参数
                 imageUrl:'',
+                goodsSpan:false,
+                btnType:'success',
+                btnName:'确定'
             }
         },
         components: {BreadCrumb},
@@ -65,6 +70,19 @@
                 this.imageUrl = res.data.url
                 this.bannerId = res.data.id
             },
+            // 更改按钮
+            changeType() {
+                if (this.goodsSpan) {
+                    this.goodsSpan = false
+                    this.btnType = 'success'
+                    this.btnName = '确定'
+                } else {
+                    this.goodsSpan = true
+                    this.btnType = 'primary'
+                    this.btnName = '修改'
+
+                }
+            }
         }
     }
 </script>

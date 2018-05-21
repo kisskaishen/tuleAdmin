@@ -15,6 +15,10 @@
                 <el-form-item label="总票数：">
                     <span>{{ticketInfo.delivery_num}}</span>
                 </el-form-item>
+                <el-form-item label="包含事项：">
+                    <span>内容1、内容2、内容3</span>
+                </el-form-item>
+
                 <el-form-item label="是否为热销产品：">
                     <span>{{ticketInfo.is_hot=='1'?'是':'否'}}</span>
                 </el-form-item>
@@ -94,6 +98,12 @@
                         color: #fff;
                     }
                 }
+            }
+            img {
+                float: left;
+                width: 160px;
+                height: 160px;
+                margin-right: 20px;
             }
         }
     }

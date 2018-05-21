@@ -7,7 +7,7 @@
                     <template slot="title">
                         <i class="el-icon-info"></i>订单信息
                     </template>
-                    <el-form class="order" label-width="140px" label-position="right">
+                    <el-form class="orderInfo" label-width="140px" label-position="right">
                         <el-form-item label="订单号："></el-form-item>
                         <el-form-item label="订单商品："></el-form-item>
                         <el-form-item label="支付金额："></el-form-item>
@@ -20,7 +20,7 @@
                     <template slot="title">
                         <i class="el-icon-success"></i>用户信息
                     </template>
-                    <el-form class="order" label-width="140px" label-position="right">
+                    <el-form class="orderInfo" label-width="140px" label-position="right">
                         <el-form-item label="用户账号："></el-form-item>
                         <el-form-item label="用户姓名："></el-form-item>
                         <el-form-item label="用户手机号："></el-form-item>
@@ -35,7 +35,7 @@
                     <template slot="title">
                         <i class="el-icon-success"></i>游客信息
                     </template>
-                    <el-form class="order" label-width="140px" label-position="right">
+                    <el-form class="orderInfo" label-width="140px" label-position="right">
                         <el-form-item label="游客姓名："></el-form-item>
                         <el-form-item label="游客手机号："></el-form-item>
                         <el-form-item label="游客身份证："></el-form-item>

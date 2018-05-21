@@ -13,14 +13,14 @@
                     <el-select v-model="searchForm.equipType" size="small">
                         <el-option
                             v-for="item in searchForm.equipTypes"
-                            :key="item.id"
-                            :label="item.label"
-                            :value="item.id"></el-option>
+                            :key="item.class_id"
+                            :label="item.class_name"
+                            :value="item.class_name"></el-option>
                     </el-select>
                     <router-link to="addEquipType" class="primary">添加分类？</router-link>
                 </el-form-item>
                 <el-form-item>
-                    <el-button size="small" type="danger">查询</el-button>
+                    <el-button size="small" type="danger" @click="searchBtn">查询</el-button>
                 </el-form-item>
                 <el-form-item>
                     <el-button size="small" type="primary">
@@ -43,7 +43,7 @@
                     <template slot-scope="scope">
                         <el-button size="small" plain @click="seeTicket(scope.row)">查看</el-button>
                         <el-button type="primary" size="small" plain @click="editTicket(scope.row)">编辑</el-button>
-                        <el-button type="danger" size="small" plain @click="deleteTicket(scope.row)">删除</el-button>
+                        <el-button type="danger" size="small" plain @click="deleteTicket(scope)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -68,23 +68,11 @@
                     equipUse: '',
                     equipTypes: [
                         {
-                            id: '0',
-                            label: '全部分类'
+                            class_id: '0',
+                            class_name: '全部分类'
                         },
-                        {
-                            id: '1',
-                            label: '分类1'
-                        },
-                        {
-                            id: '2',
-                            label: '分类2'
-                        },
-                        {
-                            id: '3',
-                            label: '分类3'
-                        }
                     ],
-                    equipType: '0',
+                    equipType: '',
                 },
                 equipData: [],
                 totalPage: 1
@@ -101,7 +89,7 @@
                 this.$post('equip/equip_list', {
                     equip_name: this.searchForm.equipName,
                     purpose: this.searchForm.equipUse,
-                    classify_name: this.searchForm.equipType,
+                    classify_name: this.searchForm.equipType=='全部分类'?'':this.searchForm.equipType,
                 })
                     .then(res => {
                         this.equipData = res.data.list
@@ -112,8 +100,12 @@
             getEquipClassify() {
                 this.$post('equip/class_list')
                     .then(res => {
-                        this.classify = res.data
+                        this.searchForm.equipTypes = this.searchForm.equipTypes.concat(res.data)
                     })
+            },
+            // 查询
+            searchBtn() {
+                this.getList()
             },
             seeTicket(e) {
                 this.$router.push({
@@ -139,7 +131,7 @@
                 })
                     .then((res) => {
                         this.$post('equip/equip_del', {
-                            equip_id: e.equip_id
+                            equip_id: e.row.equip_id
                         })
                             .then(res => {
                                 this.equipData.splice(e.$index, 1)
