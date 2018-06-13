@@ -8,6 +8,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 
 export const baseUrlApi = 'https://api.jztule.com/public/index.php/'
 axios.defaults.baseURL = baseUrlApi + 'admin/'			// 公共接口
+export const baseUrl = baseUrlApi + 'admin/'
 
 // 请求拦截器
 axios.interceptors.request.use((config) => {

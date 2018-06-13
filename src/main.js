@@ -5,9 +5,10 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import {get, post, upload, baseUrlApi} from './config/api'
+import {get, post, upload, baseUrl, baseUrlApi} from './config/api'
 
 import Util from './config/utils'
+
 Vue.use(Util)
 
 
@@ -15,6 +16,7 @@ Vue.use(ElementUI);
 Vue.prototype.$post = post
 Vue.prototype.$get = get
 Vue.prototype.$upload = upload          // 图片上传专用
+Vue.prototype.$baseUrl = baseUrl
 Vue.prototype.$baseUrlApi = baseUrlApi
 
 Vue.config.productionTip = false
