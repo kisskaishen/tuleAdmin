@@ -22,7 +22,7 @@
                     <el-button>
                         <router-link to="/user">返回用户列表</router-link>
                     </el-button>
-                    <el-button type="danger" plain @click="goEdit">去修改</el-button>
+                    <!--<el-button type="danger" plain @click="goEdit">去修改</el-button>-->
                 </el-form-item>
             </el-form>
         </div>

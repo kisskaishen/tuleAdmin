@@ -7,6 +7,9 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import {get, post, upload, baseUrlApi} from './config/api'
 
+import Util from './config/utils'
+Vue.use(Util)
+
 
 Vue.use(ElementUI);
 Vue.prototype.$post = post

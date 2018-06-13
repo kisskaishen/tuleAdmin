@@ -39,6 +39,7 @@
             </el-form>
             <el-table :data="ticketData" style="width: 100%;" size="medium" highlight-current-row
                       :default-sort="{prop:'startTime'}">
+                <el-table-column header-align="center" align="center" prop="ticket_id" label="id"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="leave_date" label="出发日期"
                                  sortable></el-table-column>
                 <el-table-column header-align="center" align="center" prop="ticket_name" label="门票名称"></el-table-column>

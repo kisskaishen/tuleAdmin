@@ -41,14 +41,14 @@
                 <el-form-item label="装备展示图片：">
                     <div class="imgsList" v-if="editRuleForm.images">
                         <div class="imgDiv" v-for="item,index in editRuleForm.images">
-                            <img :src="item.image" alt="" @mouseover="mouseShow(item,index)">
+                            <img :src="item.image || item.url" alt="" @mouseover="mouseShow(item,index)">
                             <div class="dialogBg" v-if="index==currentIndex" @mouseout="mouseHide(item,index)"></div>
                             <i class="el-icon-delete" v-if="index==currentIndex" @click="deleteImg(item,index)"></i>
                         </div>
 
                     </div>
-                    <div class="addImgBtn">
-                        <input type="file" multiple @change="imgUpload">
+                    <div class="addImgBtn" v-if="this.editRuleForm.images.length<4">
+                        <input type="file" @change="imgUpload">
                         <el-button icon="el-icon-plus"></el-button>
                     </div>
                     <div class="tip">
@@ -67,8 +67,8 @@
                         </div>
 
                     </div>
-                    <div class="addImgBtn">
-                        <input type="file" multiple @change="imgRemarkUpload">
+                    <div class="addImgBtn" v-if="this.editRuleForm.introduce_images.length<4">
+                        <input type="file" @change="imgRemarkUpload">
                         <el-button icon="el-icon-plus"></el-button>
                     </div>
                     <div class="tip">
@@ -265,8 +265,11 @@
                         data.append('type', 3)
                         this.$upload('other/Img/upload', data)
                             .then(res => {
+                                console.log(res)
                                 this.introduce_images.push(res)
-                            })
+                        console.log(this.introduce_images)
+
+                    })
                     }
                 }
             },
@@ -295,6 +298,9 @@
                 })
                     .then(res => {
                         this.$message.success(res.message)
+                        setTimeout(()=>{
+                            this.$router.push('/equip/index')
+                        },1200)
                     })
             },
             submitForm(formName) {

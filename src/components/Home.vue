@@ -11,7 +11,7 @@
                     </router-link>
                     <div class="adminInfo">
                         <el-dropdown trigger="click" @command="outAdmin">
-                            <el-button><i class="el-icon-menu"></i>秦文凯</el-button>
+                            <el-button><i class="el-icon-menu"></i>{{$local.get('adminInfo').admin_name}}</el-button>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item command="out">退出登录</el-dropdown-item>
                             </el-dropdown-menu>
@@ -47,6 +47,10 @@
                             <i class="user"></i>
                             <span slot="title">用户管理</span>
                         </el-menu-item>
+                        <el-menu-item index="/banner/index">
+                            <i class="banner"></i>
+                            <span slot="title">banner图管理</span>
+                        </el-menu-item>
                     </el-menu>
                 </el-aside>
                 <el-main>
@@ -81,6 +85,7 @@
                         type: 'danger'
                     }).then(() => {
                         this.$message.success('退出成功')
+                        this.$local.delete('adminInfo')
                         this.$router.push('/login')
                     }).catch(() => {
                         this.$message.info('取消退出')
@@ -143,6 +148,9 @@
             }
             .user {
                 background: url("../images/user-active.png") no-repeat center /100%;
+            }
+            .banner {
+                background: url("../images/banner-active.png") no-repeat center /100%;
             }
         }
     }

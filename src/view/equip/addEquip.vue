@@ -35,7 +35,7 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="特卖价格：" prop="sale_price" v-if="addRuleForm.is_sale=='1'">
-                    <el-input v-model.number="addRuleForm.sale_price" placeholder="请设置门票特卖价格"></el-input>
+                    <el-input v-model.number="addRuleForm.sale_price" placeholder="请设置装备特卖价格"></el-input>
                 </el-form-item>
                 <el-form-item label="装备展示图片：">
                     <div class="imgsList" v-if="addRuleForm.dialogImageUrlArr">

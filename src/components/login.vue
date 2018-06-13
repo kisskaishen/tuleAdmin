@@ -9,10 +9,10 @@
                 <el-form-item prop="userPwd">
                     <el-input type="password" v-model="loginForm.userPwd" placeholder="登录密码"></el-input>
                 </el-form-item>
-                <el-form-item prop="captcha">
-                    <el-input class="captcha" v-model="loginForm.captcha" placeholder="验证码"></el-input>
-                    <img src="" alt="验证码">
-                </el-form-item>
+                <!--<el-form-item prop="captcha">-->
+                    <!--<el-input class="captcha" v-model="loginForm.captcha" placeholder="验证码"></el-input>-->
+                    <!--<img src="" alt="验证码">-->
+                <!--</el-form-item>-->
                 <el-form-item>
                     <el-button type="primary" @click="submit('loginForm')">登录</el-button>
                 </el-form-item>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+    import md5 from 'js-md5';
     export default {
         name: "login",
         data() {
@@ -52,18 +53,17 @@
             submit(form) {
                 this.$refs[form].validate((valid) => {
                     if (valid) {
-                        this.$router.push('/')
-                        // if (this.$refs[form].model.captcha) {
-                        //     console.log('验证码正确后去验证登录账号和密码是否正确')
-                        //     if (this.$refs[form].model.userName && this.$refs[form].model.userPwd) {
-                        //         console.log('账号密码正确登录成功，跳转首页')
-                        //     } else {
-                        //         console.log('账号或密码错误，重新登录！')
-                        //     }
-                        // } else {
-                        //     console.log('验证码错误，刷新验证码重新输入')
-                        // }
-
+                        this.$post('login/login',{
+                            member_name:this.$refs[form].model.userName,
+                            member_password:md5(this.$refs[form].model.userPwd)
+                        })
+                            .then(res=>{
+                                this.$message.success(res.message)
+                                this.$local.set('adminInfo',res.data)
+                                setTimeout(()=>{
+                                    this.$router.push('/')
+                                },1000)
+                            })
                     } else {
                         this.$message.error('登录失败！')
                     }
@@ -80,7 +80,8 @@
         right: 0;
         top: 0;
         bottom: 0;
-        background: linear-gradient(red, blue);
+        /*background: linear-gradient(red, blue);*/
+        background: url("../images/loginbg.jpeg") no-repeat center /100%;
         .loginDiv {
             position: absolute;
             width: 300px;
@@ -91,6 +92,8 @@
             top: 40%;
             background-color: #fff;
             padding: 30px 50px 10px;
+            background: url("../images/loginbg.jpeg") no-repeat center /100%;
+
             h4 {
                 margin-bottom: 20px;
             }

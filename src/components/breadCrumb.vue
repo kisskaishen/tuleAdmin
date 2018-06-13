@@ -1,7 +1,7 @@
 <template>
     <div class="bread">
         <el-breadcrumb separator=">">
-            <el-breadcrumb-item :to="'/'+firstNav+'/index'">{{navName}}</el-breadcrumb-item>
+            <el-breadcrumb-item :to="'/'+firstNav">{{navName}}</el-breadcrumb-item>
             <el-breadcrumb-item v-if="navLen">{{navName2}}</el-breadcrumb-item>
         </el-breadcrumb>
     </div>
@@ -36,18 +36,27 @@
                 switch (this.firstNav) {
                     case '/':
                         this.navName = '首页概览'
+                        this.firstNav = ''
                         break;
                     case 'ticket':
                         this.navName = '门票管理'
+                        this.firstNav = 'ticket'
                         break;
                     case 'equip':
                         this.navName = '装备管理'
+                        this.firstNav = 'equip'
                         break;
                     case 'order':
                         this.navName = '订单管理'
+                        this.firstNav = 'order'
                         break;
                     case 'user':
                         this.navName = '用户管理'
+                        this.firstNav = 'user'
+                        break;
+                    case 'banner':
+                        this.navName = 'banner管理'
+                        this.firstNav = 'banner'
                         break;
                 }
                 switch (this.secondNav) {
@@ -80,6 +89,9 @@
                         break;
                     case 'editUser':
                         this.navName2 = '编辑用户信息'
+                        break;
+                    case 'editBanner':
+                        this.navName2 = '编辑banner图'
                         break;
 
                 }

@@ -6,7 +6,7 @@ import {Message} from 'element-ui';
 axios.defaults.timeout = 5000;                        //响应时间
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'; 		// 请求头
 
-export const baseUrlApi = 'http://jztule.com/api/public/index.php/'
+export const baseUrlApi = 'https://api.jztule.com/public/index.php/'
 axios.defaults.baseURL = baseUrlApi + 'admin/'			// 公共接口
 
 // 请求拦截器
