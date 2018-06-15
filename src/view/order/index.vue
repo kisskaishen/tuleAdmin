@@ -20,7 +20,8 @@
                         v-model="searchForm.orderTime"
                         type="date"
                         size="small"
-                        placeholder="时间查询"></el-date-picker>
+                        placeholder="时间查询"
+                        value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
 
                 <el-form-item label="订单状态">
@@ -114,7 +115,7 @@
         data() {
             return {
                 searchForm: {
-                    ticketName:'',
+                    ticketName: '',
                     buyerTypes: [
                         {
                             type: 'member_truename',
@@ -189,13 +190,25 @@
             },
             // 条件查询
             searchBtn() {
+                this.page = '1'
                 this.getOrderList()
             },
             // 导出excel
             outExcel() {
-                location.href = this.$baseUrl + 'Order/order_list?order_sn=' + this.searchForm.orderNum + '&order_state=' + this.searchForm.orderStatus +
-                    '&field_name=' + this.searchForm.timeType + '&field_value=' + this.searchForm.orderTime + '&search_field_name=' + 'this.searchForm.buyerType' +
-                    '&search_field_value=' + this.searchForm.orderPeople + '&page=' + this.page + '&is_outexcel=1'
+                if (this.searchForm.timeType == 'leave_date' && this.searchForm.orderTime != '' && this.searchForm.ticketName != '') {
+                    this.$post('Order/out_vister', {
+                        leave_date: this.searchForm.orderTime,
+                        ticket_name: this.searchForm.ticketName
+                    }).then(res => {
+                        location.href = this.$baseUrl + 'Order/out_vister?leave_date=' + this.searchForm.orderTime + '&ticket_name=' + this.searchForm.ticketName
+                    })
+                } else {
+                    this.$message({
+                        message: '请选择出发时间和门票名称才成正确导出哦~',
+                        type: 'warning',
+                        duration: 2000
+                    });
+                }
             },
             // 页数选择
             handleSizeChange(val) {
@@ -203,8 +216,12 @@
                 this.getOrderList()
             },
             seeOrder(e) {
-                console.log(e)
-                this.$router.push('/order/watchOrder')
+                this.$router.push({
+                    path: '/order/watchOrder',
+                    query: {
+                        order_id: e.row.order_id
+                    }
+                })
             },
             deleteOrder(e) {
                 this.$confirm('确认删除此条信息？', '提示', {
@@ -222,7 +239,8 @@
             },
             // 改变当前页
             pageChange(val) {
-                alert(val)
+                this.page = val
+                this.getOrderList()
             }
         }
     }

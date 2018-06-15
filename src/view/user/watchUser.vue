@@ -36,6 +36,22 @@
         name: "watch-user",
         data() {
             return {
+                listData:[
+                    {
+                        state: false,
+                        visit_id: 4,
+                        visit_name: "秦文凯",
+                        visit_phone: "13798238693",
+                        vist_idcard_num: "qq"
+                    },
+                    {
+                        state: false,
+                        visit_id: 5,
+                        visit_name: "许紫嫣",
+                        visit_phone: "13798238693",
+                        vist_idcard_num: "qq"
+                    }
+                ],
                 userInfo: {
                     userName: 'qwk',
                     userTel: '13798238693',
@@ -47,6 +63,17 @@
         },
         components: {BreadCrumb},
         mounted() {
+            let testArr = []
+            for(let i=0;i<this.listData.length;i++) {
+                testArr.push(this.listData[i].visit_id)
+            }
+            console.log(testArr)
+            this.$post('test',{
+                arr:JSON.stringify(testArr)
+            })
+                .then(res=>{
+                    console.log(res)
+                })
 
         },
         methods: {

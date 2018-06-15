@@ -16,10 +16,10 @@
                 </el-form-item>
 
                 <el-form-item>
-                    <el-button size="small" type="danger">查询</el-button>
+                    <el-button size="small" type="danger" @click="searchBtn">查询</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button size="small" type="success">导出Excel</el-button>
+                    <el-button size="small" type="success" @click="outExcel">导出Excel</el-button>
                 </el-form-item>
 
             </el-form>
@@ -42,7 +42,7 @@
                 <el-table-column header-align="center" align="center" prop="create_time" label="注册时间"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="orderNum" label="订单总数">
                     <template slot-scope="scope">
-                        <router-link to="/order/index">{{scope.row.orderNum}}</router-link>
+                        <router-link to="/order/index">{{scope.row.order_num}}</router-link>
                     </template>
                 </el-table-column>
 
@@ -66,23 +66,24 @@
                 searchForm: {
                     userTypes: [
                         {
-                            type: '1',
+                            type: 'member_name ',
                             name: '用户账号'
                         },
                         {
-                            type: '2',
+                            type: 'member_truename',
                             name: '用户姓名'
                         },
                         {
-                            type: '3',
+                            type: 'member_mobile',
                             name: '用户手机号'
                         },
                     ],
                     userType: '1',
-                    userVal: '',
+                    userName: '',
                 },
                 userData: [],
-                totalPage: 1
+                totalPage: 1,
+                page: '1'
             }
         },
         components: {BreadCrumb},
@@ -93,7 +94,8 @@
             getUserList() {
                 this.$post('member/member_list', {
                     search_field_name: this.searchForm.userType,
-                    search_field_value: this.searchForm.userVal
+                    search_field_value: this.searchForm.userName,
+                    page: this.page
                 })
                     .then(res => {
                         this.userData = res.data.list
@@ -122,8 +124,17 @@
                         this.$message.info('取消删除')
                     })
             },
+            // 翻页改变页数
             pageChange(val) {
-
+                this.page = val
+            },
+            // 条件查询
+            searchBtn() {
+                this.page = '1'
+                this.getUserList()
+            },
+            outExcel() {
+                location.href = this.$baseUrl + 'member/member_list?search_field_name=' + this.searchForm.userType + '&search_field_value=' + this.searchForm.userVal + '&is_outexcel=1'
             }
         }
     }
