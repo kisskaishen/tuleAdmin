@@ -4,21 +4,20 @@
         <div class="container">
             <el-form label-width="180px">
                 <el-form-item label="轮播图所在页面：">
-                    <el-select v-model="pageType">
+                    <el-select v-model="bannerType">
                         <el-option
-                            v-for="item,index in pageTypes"
+                            v-for="item,index in bannerTypes"
                             :key="item.id"
                             :label="item.label"
                             :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="轮播图名称：">
-                    <el-input v-model="bannerName"></el-input>
-                </el-form-item>
+
                 <el-form-item label="轮播图图片：">
                     <el-upload
                         class="avatar-uploader"
-                        :action=$baseUrlApi+'other/Img/upload'
+                        :action="$baseUrlApi+'other/Img/upload'"
+                        :data="updateData"
                         :show-file-list="false"
                         :on-success="handleAvatarSuccess"
                         :before-upload="beforeAvatarUpload">
@@ -42,28 +41,24 @@
         name: "editBanner",
         data() {
             return {
-                pageTypes: [
+                bannerTypes: [
                     {
                         id: '1',
-                        label: '首页'
+                        label: '门票轮播图'
                     },
                     {
                         id: '2',
-                        label: '景点专区'
+                        label: '装备轮播图'
                     },
                     {
-                        id: '3',
-                        label: '特卖专区'
-                    },
-                    {
-                        id: '4',
-                        label: '装备专区'
+                        id: '6',
+                        label: '首页轮播图'
                     }
                 ],
-                pageType: '',
-                bannerName: '',
+                bannerType: '',
                 imageUrl:'',
                 bannerSort: '',
+                updateData:{type:'6'}
             }
         },
         components: {BreadCrumb},
@@ -75,11 +70,11 @@
                 this.imageUrl = URL.createObjectURL(file.raw);
             },
             beforeAvatarUpload(file) {
-                const isJPG = file.type === 'image/jpeg';
+                const isJPG = file.type === 'image/jpeg'||file.type === 'image/jpg'||file.type === 'image/png';
                 const isLt2M = file.size / 1024 / 1024 < 2;
 
                 if (!isJPG) {
-                    this.$message.error('轮播图片只能是 JPG 格式!');
+                    this.$message.error('轮播图片只能是 JPG/JPEG/PNG 格式!');
                 }
                 if (!isLt2M) {
                     this.$message.error('轮播图片大小不能超过 2MB!');
