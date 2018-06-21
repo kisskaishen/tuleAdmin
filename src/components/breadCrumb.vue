@@ -91,7 +91,11 @@
                         this.navName2 = '编辑用户信息'
                         break;
                     case 'editBanner':
-                        this.navName2 = '编辑banner图'
+                        if (this.$route.query.id) {
+                            this.navName2 = '编辑banner图'
+                        } else {
+                            this.navName2 = '添加banner图'
+                        }
                         break;
 
                 }

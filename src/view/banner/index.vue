@@ -24,14 +24,17 @@
                 border
                 stripe
                 style="width: 100%">
-                <el-table-column prop="id" label="轮播图ID" width="120" align="left"></el-table-column>
-                <el-table-column prop="page" label="轮播图类型" width="180" align="left"></el-table-column>
-                <el-table-column label="轮播图图片" align="left">
+                <el-table-column prop="id" label="轮播图ID" width="80" align="left"></el-table-column>
+                <el-table-column prop="type" label="轮播图位置" width="120" align="left"></el-table-column>
+                <el-table-column prop="data_type" label="轮播图跳转位置" width="120" align="left"></el-table-column>
+                <el-table-column prop="data" label="跳转id" width="80" align="left"></el-table-column>
+                <el-table-column label="轮播图图片" width="140" align="left">
                     <template slot-scope="scope">
-                        <img :src="scope.row.photo" alt="">
+                        <img :src="scope.row.url" alt="">
                     </template>
                 </el-table-column>
-                <el-table-column prop="sort" label="排序" width="120" align="left"></el-table-column>
+                <el-table-column prop="sort" label="排序" width="80" align="left"></el-table-column>
+                <el-table-column prop="create_time" label="添加时间" width="160" align="left"></el-table-column>
                 <el-table-column label="操作" width="160" align="left">
                     <template slot-scope="scope">
                         <el-button
@@ -57,15 +60,7 @@
         name: "index",
         data() {
             return {
-                tableData: [
-                    {
-                        id: '1',
-                        page: '首页',
-                        name: '推荐门票banner',
-                        photo: 'https://cdn2.pinquduo.cn/5b10afc972e3549448.jpg',
-                        sort: '1'
-                    }
-                ],
+                tableData: [],
                 bannerTypes: [
                     {
                         type: '1',
@@ -88,7 +83,19 @@
             }
         },
         components: {BreadCrumb},
+        mounted() {
+            this.getBannnerList()
+        },
         methods: {
+            // banner轮播图列表
+            getBannnerList() {
+                this.$post('Banner/banner_list',{
+                    type:''
+                })
+                    .then(res=>{
+                        this.tableData = res.data
+                    })
+            },
             // 添加轮播图
             addBanner() {
                 this.$router.push('editBanner')
@@ -99,7 +106,7 @@
                 this.$router.push({
                     path: 'editBanner',
                     query: {
-                        banner_id: '123'
+                        id: val.id
                     }
                 })
             },

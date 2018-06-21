@@ -45,8 +45,13 @@
                 <el-table-column header-align="center" align="center" prop="ticket_name" label="门票名称"></el-table-column>
                 <el-table-column header-align="center" align="center" width="80px" prop="price"
                                  label="票价"></el-table-column>
+                <el-table-column header-align="center" align="center" prop="is_sale" label="是否为特卖">
+                    <template slot-scope="scope">
+                        {{scope.row.is_sale=='1'?'是':'否'}}
+                    </template>
+                </el-table-column>
                 <el-table-column header-align="center" align="center" prop="scenic_name" label="景点名称"></el-table-column>
-                <el-table-column header-align="center" align="center" prop="content" label="包含事项"></el-table-column>
+                <el-table-column header-align="center" align="center" prop="inclusion" label="包含事项"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="narea" label="所在地区"></el-table-column>
                 <el-table-column header-align="center" align="center" width="100px" prop="delivery_num"
                                  label="总票数"></el-table-column>

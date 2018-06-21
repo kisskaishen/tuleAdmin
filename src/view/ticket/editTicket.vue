@@ -19,8 +19,8 @@
                 <el-form-item label="总票数：" prop="delivery_num">
                     <el-input v-model.number="editRuleForm.delivery_num" placeholder="请设置门票数量，如100表示100张"></el-input>
                 </el-form-item>
-                <el-form-item label="包含事项：" prop="content">
-                    <el-input v-model="editRuleForm.content" type="textarea" :rows="4" placeholder="请填写此次活动的包含事项内容，如来回车费、食宿费用等"></el-input>
+                <el-form-item label="包含事项：" prop="inclusion">
+                    <el-input v-model="editRuleForm.inclusion" type="textarea" :rows="4" placeholder="请填写此次活动的包含事项内容，如来回车费、食宿费用等"></el-input>
                 </el-form-item>
                 <el-form-item label="是否为热销产品：" prop="is_hot">
                     <el-radio-group v-model="editRuleForm.is_hot" @change="startNumChange">
@@ -118,7 +118,7 @@
                     narea: '',
                     delivery_num: '',
                     price: '',
-                    content:'',
+                    inclusion:'',
                     introduce: '',
                     attention: '',
                     is_hot: '',
@@ -141,7 +141,7 @@
                     price:[
                         {required: true, validator: checkPrice, trigger: 'blur'}
                     ],
-                    content: [
+                    inclusion: [
                         {required: true, message: '请填写此次活动的包含内容', trigger: 'blur'}
                     ],
                     delivery_num: [

@@ -33,6 +33,7 @@
             </el-form>
             <el-table :data="equipData" style="width: 100%;" size="medium" highlight-current-row
                       :default-sort="{prop:'startTime'}">
+                <el-table-column header-align="center" align="center" prop="equip_id" label="装备ID"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="equip_name" label="装备名称"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="purpose" label="装备用途"></el-table-column>
                 <el-table-column header-align="center" align="center" prop="classify_name"
