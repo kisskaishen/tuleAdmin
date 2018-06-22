@@ -68,11 +68,11 @@
                     },
                     {
                         type: '2',
-                        label: '景点专区'
+                        label: '票务专区'
                     },
                     {
                         type: '3',
-                        label: '特卖专区'
+                        label: '活动专区'
                     },
                     {
                         type: '4',

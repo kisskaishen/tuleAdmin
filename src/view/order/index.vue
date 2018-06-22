@@ -196,12 +196,12 @@
             // 导出excel
             outExcel() {
                 if (this.searchForm.timeType == 'leave_date' && this.searchForm.orderTime != '' && this.searchForm.ticketName != '') {
-                    this.$post('Order/out_vister', {
-                        leave_date: this.searchForm.orderTime,
-                        ticket_name: this.searchForm.ticketName
-                    }).then(res => {
+                    // this.$post('Order/out_vister', {
+                    //     leave_date: this.searchForm.orderTime,
+                    //     ticket_name: this.searchForm.ticketName
+                    // }).then(res => {
                         location.href = this.$baseUrl + 'Order/out_vister?leave_date=' + this.searchForm.orderTime + '&ticket_name=' + this.searchForm.ticketName
-                    })
+                    // })
                 } else {
                     this.$message({
                         message: '请选择出发时间和门票名称才成正确导出哦~',

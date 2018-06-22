@@ -4,6 +4,12 @@
         <div class="container">
             <el-form :model="addRuleForm" :rules="addRule" ref="addRuleForm" label-width="140px" label-position="right"
                      class="demo-ruleForm">
+                <el-form-item label="票务类型：" prop="is_driving">
+                    <el-radio-group v-model="addRuleForm.is_driving" @change="startNumChange">
+                        <el-radio :label="1" border>自驾</el-radio>
+                        <el-radio :label="2" border>跟团</el-radio>
+                    </el-radio-group>
+                </el-form-item>
                 <el-form-item label="门票名称：" prop="ticket_name">
                     <el-input v-model="addRuleForm.ticket_name" placeholder="请输入门票名称"></el-input>
                 </el-form-item>
@@ -14,10 +20,13 @@
                     <el-input v-model="addRuleForm.narea" placeholder="请输入景点地址,如河南、焦作、武陟"></el-input>
                 </el-form-item>
                 <el-form-item label="票价：" prop="price">
-                    <el-input v-model.number="addRuleForm.price" placeholder="请设置门票价格"></el-input>
+                    <el-input v-model.number="addRuleForm.price" placeholder="请设置票务价格"></el-input>
+                </el-form-item>
+                <el-form-item label="儿童票价：" prop="child_price">
+                    <el-input v-model.number="addRuleForm.child_price" placeholder="请设置儿童价格"></el-input>
                 </el-form-item>
                 <el-form-item label="总票数：" prop="delivery_num">
-                    <el-input v-model.number="addRuleForm.delivery_num" placeholder="请设置门票数量，如100表示100张"></el-input>
+                    <el-input v-model.number="addRuleForm.delivery_num" placeholder="请设置票务数量，如100表示100张"></el-input>
                 </el-form-item>
                 <el-form-item label="包含事项：" prop="inclusion">
                     <el-input v-model="addRuleForm.inclusion" type="textarea" :rows="4"
@@ -52,8 +61,12 @@
                         format="yyyy 年 MM 月 dd 日"
                         value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
+                <el-form-item label="行程安排：" prop="scheduling" v-if="addRuleForm.is_driving=='2'">
+                    <el-input type="textarea" :rows="10" v-model="addRuleForm.scheduling"
+                              placeholder="请填写行程介绍"></el-input>
+                </el-form-item>
                 <el-form-item label="景点介绍：" prop="introduce">
-                    <el-input type="textarea" :rows="3" v-model="addRuleForm.introduce"
+                    <el-input type="textarea" :rows="20" v-model="addRuleForm.introduce"
                               placeholder="请填写景点介绍"></el-input>
                 </el-form-item>
                 <el-form-item label="图片上传：" prop="images">
@@ -116,13 +129,16 @@
             }
             return {
                 addRuleForm: {
+                    is_driving: 1,
                     ticket_name: '',
                     scenic_name: '',
                     narea: '',
                     delivery_num: '',
                     price: '',
+                    child_price:'',
                     inclusion: '',
                     introduce: '',
+                    scheduling:'',
                     attention: '',
                     is_hot: 1,
                     is_sale: 1,
@@ -144,8 +160,14 @@
                     price: [
                         {required: true, validator: checkPrice, trigger: 'blur'}
                     ],
+                    child_price:[
+                        {required: true, validator: checkPrice, trigger: 'blur'}
+                    ],
                     inclusion: [
                         {required: true, message: '请填写此次活动的包含内容', trigger: 'blur'}
+                    ],
+                    scheduling:[
+                        {required: true, message: '请填写此次活动的行程安排', trigger: 'blur'}
                     ],
                     delivery_num: [
                         {required: true, validator: checkTicket, trigger: 'blur'}
@@ -213,13 +235,16 @@
             // 添加门票接口
             addTicket() {
                 this.$post('ticket/ticket_add_update', {
+                    is_driving: this.addRuleForm.is_driving,
                     ticket_name: this.addRuleForm.ticket_name,
                     scenic_name: this.addRuleForm.scenic_name,
                     narea: this.addRuleForm.narea,
                     delivery_num: this.addRuleForm.delivery_num,
                     price: this.addRuleForm.price,
+                    child_price: this.addRuleForm.child_price,
                     introduce: this.addRuleForm.introduce,
                     inclusion: this.addRuleForm.inclusion,
+                    scheduling: this.addRuleForm.scheduling,
                     attention: this.addRuleForm.attention,
                     is_hot: this.addRuleForm.is_hot,
                     is_sale: this.addRuleForm.is_sale,

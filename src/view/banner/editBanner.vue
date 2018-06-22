@@ -72,7 +72,7 @@
                     },
                     {
                         id: '3',
-                        label: '特卖专区'
+                        label: '活动专区'
                     }
                 ],
                 bannerType: '',
