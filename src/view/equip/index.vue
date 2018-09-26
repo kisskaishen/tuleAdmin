@@ -23,9 +23,7 @@
                     <el-button size="small" type="danger" @click="searchBtn">查询</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button size="small" type="primary">
-                        <router-link to="/equip/addEquip">添加装备</router-link>
-                    </el-button>
+                    <el-button size="small" type="primary" @click="AddEquip">添加装备</el-button>
                 </el-form-item>
                 <el-form-item>
                     <el-button size="small" type="success">导出Excel</el-button>
@@ -107,6 +105,10 @@
             // 查询
             searchBtn() {
                 this.getList()
+            },
+            // 添加装备
+            AddEquip() {
+                this.$router.push('/equip/addEquip')
             },
             seeTicket(e) {
                 this.$router.push({

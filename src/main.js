@@ -8,7 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import {get, post, upload, baseUrl, baseUrlApi} from './config/api'
 
 import Util from './config/utils'
-
+import $ from 'jquery'
 Vue.use(Util)
 
 

@@ -39,6 +39,10 @@
                             <i class="equip"></i>
                             <span slot="title">装备管理</span>
                         </el-menu-item>
+                        <el-menu-item index="/fruit/index">
+                            <i class="fruit"></i>
+                            <span slot="title">果蔬管理</span>
+                        </el-menu-item>
                         <el-menu-item index="/order/index">
                             <i class="order"></i>
                             <span slot="title">订单管理</span>
@@ -141,6 +145,9 @@
                 background: url("../images/ticket-active.png") no-repeat center /100%;
             }
             .equip {
+                background: url("../images/equip-active.png") no-repeat center /100%;
+            }
+            .fruit {
                 background: url("../images/equip-active.png") no-repeat center /100%;
             }
             .order {

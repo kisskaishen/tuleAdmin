@@ -18,12 +18,17 @@ const AddEquipType = r => require.ensure([], () => r(require('@/view/equip/addEq
 const EditEquip = r => require.ensure([], () => r(require('@/view/equip/editEquip')), 'EditEquip')
 const WatchEquip = r => require.ensure([], () => r(require('@/view/equip/watchEquip')), 'WatchEquip')
 
+const FruitIndex = r => require.ensure([], () => r(require('@/view/fruit/index')), 'FruitIndex')
+const AddFruit = r => require.ensure([], () => r(require('@/view/fruit/addFruit')), 'AddFruit')
+
+
 const OrderIndex = r => require.ensure([], () => r(require('@/view/order/index')), 'OrderIndex')
 const WatchOrder = r => require.ensure([], () => r(require('@/view/order/watchOrder')), 'WatchOrder')
 
 const UserIndex = r => require.ensure([], () => r(require('@/view/user/index')), 'UserIndex')
 // const EditUser = r => require.ensure([], () => r(require('@/view/user/editUser')), 'EditUser')
 const WatchUser = r => require.ensure([], () => r(require('@/view/user/watchUser')), 'WatchUser')
+
 
 const BannerIndex = r => require.ensure([], () => r(require('@/view/banner/index')), 'BannerIndex')
 const EditBanner = r => require.ensure([], () => r(require('@/view/banner/editBanner')), 'EditBanner')
@@ -156,6 +161,24 @@ let router = new Router({
                         login: true
                     },
                 },
+
+                // 果蔬管理
+                {
+                    path: '/fruit/index',
+                    component: FruitIndex,
+                    meta: {
+                        title: '果蔬管理',
+                        login: true
+                    },
+                },
+                {
+                    path: '/fruit/addFruit',
+                    component: AddFruit,
+                    meta: {
+                        title: '添加果蔬',
+                        login: true
+                    },
+                },
                 // 订单管理
                 {
                     path: '/order',
@@ -211,6 +234,7 @@ let router = new Router({
                     },
                 },
 
+
                 // banner图管理
                 {
                     path: '/banner',
@@ -238,6 +262,7 @@ let router = new Router({
                         login: true
                     },
                 },
+
             ]
         },
         {

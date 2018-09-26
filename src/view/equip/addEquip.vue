@@ -64,7 +64,6 @@
                             <i class="el-icon-delete" v-if="index==currentRemarkIndex"
                                @click="deleteRemarkImg(item,index)"></i>
                         </div>
-
                     </div>
                     <div class="addImgBtn">
                         <input type="file" multiple @change="imgRemarkUpload">
@@ -75,11 +74,65 @@
                         <p>上传图片大小不能超过1M！</p>
                     </div>
                 </el-form-item>
+
+                <el-form-item label="装备规格/库存：" prop="purpose" class="specForm">
+                    <el-tabs v-model="activeName" @tab-click="handleClick">
+                        <el-tab-pane label="单规格" name="one">
+                            <div class="specType">
+                                <el-select v-model="specType1" size="small">
+                                    <el-option
+                                        v-for="item,index in specTypes"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value"></el-option>
+                                </el-select>
+                                <el-button type="primary" size="small">确定</el-button>
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="双规格" name="two">两种规格</el-tab-pane>
+                    </el-tabs>
+                    <br>
+                    <hr>
+                    <table>
+                        <tr>
+                            <th>当前库存</th>
+                            <th>设置库存</th>
+                            <th>购买价</th>
+                            <th>市场价</th>
+                            <th>SKU图</th>
+                        </tr>
+                        <tr>
+                            <td>0</td>
+                            <td>
+                                <el-input v-model="setStorage" size="small"></el-input>
+                            </td>
+                            <td>
+                                <el-input v-model="setPrice" size="small"></el-input>
+                            </td>
+                            <td>
+                                <el-input v-model="setMarketPrice" size="small"></el-input>
+                            </td>
+                            <td>
+                                <el-upload
+                                    class="avatar-uploader"
+                                    :action="this.$baseUrl+'other/Img/upload'"
+                                    :show-file-list="false"
+                                    :on-success="handleAvatarSuccess"
+                                    :before-upload="beforeAvatarUpload">
+                                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload>
+                            </td>
+                        </tr>
+                    </table>
+                </el-form-item>
                 <el-form-item>
                     <el-button type="danger" @click="submitForm('addRuleForm')">添加</el-button>
                     <el-button @click="resetForm('addRuleForm')">重置</el-button>
                 </el-form-item>
             </el-form>
+
+            <dialog></dialog>
         </div>
     </div>
 </template>
@@ -138,6 +191,14 @@
                 },
                 currentIndex: -1,            // 显示哪一个
                 currentRemarkIndex: -1,            // 显示哪一个
+
+                // 规格
+                activeName:'one',
+                specTypes:[
+                    {label:'颜色',value:'1'},
+                    {label:'尺寸',value:'2'}
+                ],
+                specType1:'',
 
 
             }
@@ -253,6 +314,28 @@
                     }
                 }
             },
+            // 上传sku图前的判断
+            beforeAvatarUpload(file) {
+                console.log(file)
+                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
+            },
+            // 上传sku图
+            handleAvatarSuccess(res, file) {
+                this.imageUrl = URL.createObjectURL(file.raw);
+            },
+            // 单规格/双规格切换
+            handleClick(tab, event) {
+                console.log(tab, event);
+            },
             addEquipData() {
                 this.$post('equip/equip_add_update', {
                     equip_name: this.addRuleForm.equip_name,
@@ -301,94 +384,117 @@
     .container {
         margin-top: 20px;
         .el-form {
-            .el-input, .el-textarea, .el-radio-group {
-                width: 400px;
-                float: left;
-                .el-radio {
+            .el-form-item {
+                .el-input, .el-textarea, .el-radio-group {
+                    width: 400px;
                     float: left;
-                }
-            }
-            .el-select {
-                float: left;
-                width: 200px;
-            }
-            .el-button {
-                float: left;
-            }
-            .imgsList {
-                float: left;
-                margin-right: 20px;
-                .imgDiv {
-                    position: relative;
-                    display: inline-block;
-                    width: 160px;
-                    height: 160px;
-                    margin-right: 10px;
-                    img {
-                        width: 100%;
-                        height: 100%;
-                    }
-                    .dialogBg {
-                        position: absolute;
-                        width: 100%;
-                        height: 100%;
-                        top: 0;
-                        left: 0;
-                        background-color: rgba(0, 0, 0, .2);
-                    }
-                    i {
-                        position: absolute;
-                        font-size: 40px;
-                        left: 50%;
-                        margin-left: -20px;
-                        top: 50%;
-                        margin-top: -20px;
-                        cursor: pointer;
-                        z-index: 9;
-                        color: #fff;
+                    .el-radio {
+                        float: left;
                     }
                 }
-            }
-            .addImgBtn {
-                float: left;
-                position: relative;
-                overflow: hidden;
-                width: 160px;
-                height: 160px;
-                input {
-                    width: 160px;
-                    height: 160px;
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    opacity: 0;
-                    z-index: 9;
+                .el-select {
+                    float: left;
+                    width: 200px;
                 }
                 .el-button {
-                    width: 160px;
-                    height: 160px;
-                    border: 1px dashed #ccc;
-                    .el-icon-plus {
-                        font-size: 40px;
-                    }
-
+                    float: left;
                 }
-            }
-            table {
-                width: 100%;
-                thead {
-                    background-color: #ccc;
-                    tr {
-                        td {
-                            width: 160px;
+                .imgsList {
+                    float: left;
+                    margin-right: 20px;
+                    .imgDiv {
+                        position: relative;
+                        display: inline-block;
+                        width: 160px;
+                        height: 160px;
+                        margin-right: 10px;
+                        img {
+                            width: 100%;
+                            height: 100%;
+                        }
+                        .dialogBg {
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+                            top: 0;
+                            left: 0;
+                            background-color: rgba(0, 0, 0, .2);
+                        }
+                        i {
+                            position: absolute;
+                            font-size: 40px;
+                            left: 50%;
+                            margin-left: -20px;
+                            top: 50%;
+                            margin-top: -20px;
+                            cursor: pointer;
+                            z-index: 9;
+                            color: #fff;
                         }
                     }
                 }
-                tr {
-                    td {
+                .addImgBtn {
+                    float: left;
+                    position: relative;
+                    overflow: hidden;
+                    width: 160px;
+                    height: 160px;
+                    input {
+                        width: 160px;
+                        height: 160px;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        opacity: 0;
+                        z-index: 9;
+                    }
+                    .el-button {
+                        width: 160px;
+                        height: 160px;
+                        border: 1px dashed #ccc;
+                        .el-icon-plus {
+                            font-size: 40px;
+                        }
+
+                    }
+                }
+                table {
+                    width: 100%;
+
+                    tr {
+                        th, td {
+                            border: 1px solid #eee;
+
+                            width: 160px;
+                            margin: 0 auto;
+                            text-align: left;
+                        }
                         .el-input {
                             width: 160px;
                         }
+                        .avatar-uploader {
+                            width: 100px;
+                            height: 100px;
+                            line-height: 100px;
+                            border: 1px dashed #ccc;
+                            -webkit-border-radius: 8px;
+                            -moz-border-radius: 8px;
+                            border-radius: 8px;
+                            .el-icon-plus {
+                                font-size: 30px;
+                                text-align: center;
+                            }
+                        }
+                    }
+                }
+            }
+            .specForm {
+                .specType {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    .el-select {
+                        margin-right: 20px;
                     }
                 }
             }
@@ -401,6 +507,12 @@
             i {
                 font-size: 40px;
             }
+        }
+    }
+
+    .avatar-uploader {
+        .el-upload--text {
+            width: 100px;
         }
     }
 </style>

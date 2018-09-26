@@ -46,6 +46,10 @@
                         this.navName = '装备管理'
                         this.firstNav = 'equip'
                         break;
+                    case 'fruit':
+                        this.navName = '果蔬管理'
+                        this.firstNav = 'equip'
+                        break;
                     case 'order':
                         this.navName = '订单管理'
                         this.firstNav = 'order'
@@ -80,6 +84,9 @@
                         break;
                     case 'watchEquip':
                         this.navName2 = '查看装备'
+                        break;
+                    case 'addFruit':
+                        this.navName2 = '添加果蔬'
                         break;
                     case 'watchOrder':
                         this.navName2 = '查看订单'

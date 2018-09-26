@@ -1,10 +1,32 @@
+
 * {
     margin: 0;
     padding: 0;
 }
 
+html,
+body,
+#app{
+    width: 100%;
+}
+
 body {
+    font-family: 'PingFang SC', "Helvetica Neue", Helvetica, "microsoft yahei", arial, STHeiTi, sans-serif;
     background-color: #f2f2f2;
+
+}
+
+a {
+    text-decoration: none;
+}
+
+textarea {
+    resize: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
 i {
@@ -15,53 +37,55 @@ li {
     list-style: none;
 }
 
-.index {
+i.index {
     background: url("../images/index.png") no-repeat center /100%;
 }
 
-.ticket {
+i.ticket {
     background: url("../images/ticket.png") no-repeat center /100%;
 }
 
-.equip {
+i.equip {
     background: url("../images/equip.png") no-repeat center /100%;
 }
-
-.order {
+i.fruit {
+    background: url("../images/equip.png") no-repeat center /100%;
+}
+i.order {
     background: url("../images/order.png") no-repeat center /100%;
 }
 
-.user {
+i.user {
     background: url("../images/user.png") no-repeat center /100%;
 }
-.banner {
+i.banner {
     background: url("../images/banner.png") no-repeat center /100%;
 }
 
-.indexActive {
+i.indexActive {
     background: url("../images/index-active.png") no-repeat center /100%;
 }
 
-.ticketActive {
+i.ticketActive {
     background: url("../images/ticket-active.png") no-repeat center /100%;
     transform: scale(1.2);
 }
 
-.equipActive {
+i.equipActive {
     background: url("../images/equip-active.png") no-repeat center /100%;
     transform: scale(1.2);
 }
 
-.orderActive {
+i.orderActive {
     background: url("../images/order-active.png") no-repeat center /100%;
     transform: scale(1.2);
 }
 
-.userActive {
+i.userActive {
     background: url("../images/user-active.png") no-repeat center /100%;
     transform: scale(1.2);
 }
-.bannerActive {
+i.bannerActive {
     background: url("../images/banner-active.png") no-repeat center /100%;
     transform: scale(1.2);
 }
