@@ -2,7 +2,7 @@
     <div>
         <bread-crumb :path="this.$route.path"></bread-crumb>
         <div class="container">
-            <el-form :model="addRuleForm" :rules="addRule" ref="addRuleForm" label-width="140px" label-position="right"
+            <el-form :model="addRuleForm" :rules="addRule" ref="addRuleForm" label-width="180px" label-position="right"
                      class="demo-ruleForm">
                 <el-form-item label="票务类型：" prop="is_driving">
                     <el-radio-group v-model="addRuleForm.is_driving" @change="startNumChange">
@@ -68,6 +68,54 @@
                 <el-form-item label="景点介绍：" prop="introduce">
                     <el-input type="textarea" :rows="20" v-model="addRuleForm.introduce"
                               placeholder="请填写景点介绍"></el-input>
+                </el-form-item>
+                <el-form-item label="列表banner图片上传：" prop="images">
+                    <el-upload
+                        :action="$baseUrlApi+'other/Img/upload'"
+                        list-type="picture-card"
+                        :data="uploadData"
+                        ref="upload"
+                        :limit="1"
+                        :beforeUpload="uploadBefore"
+                        :on-success="uploadSuccess"
+                        :on-preview="uploadImg"
+                        :on-remove="deleteImg">
+                        <i class="el-icon-plus"></i>
+                    </el-upload>
+
+                    <el-dialog :visible.sync="dialogVisible">
+                        <img width="100%" :src="dialogVisibleUrl" alt="">
+                    </el-dialog>
+                    <div class="tip">
+                        <p>上传图片只能为jpg、jpeg、png格式！</p>
+                        <p>上传图片大小不能超过1M！</p>
+                        <p>上传图片尺寸750*360！</p>
+                        <p>上传图片数量仅一张！</p>
+                    </div>
+                </el-form-item>
+                <el-form-item label="详情页banner图片上传：" prop="images">
+                    <el-upload
+                        :action="$baseUrlApi+'other/Img/upload'"
+                        list-type="picture-card"
+                        :data="uploadData"
+                        ref="upload"
+                        :limit="1"
+                        :beforeUpload="uploadBefore"
+                        :on-success="uploadSuccess"
+                        :on-preview="uploadImg"
+                        :on-remove="deleteImg">
+                        <i class="el-icon-plus"></i>
+                    </el-upload>
+
+                    <el-dialog :visible.sync="dialogVisible">
+                        <img width="100%" :src="dialogVisibleUrl" alt="">
+                    </el-dialog>
+                    <div class="tip">
+                        <p>上传图片只能为jpg、jpeg、png格式！</p>
+                        <p>上传图片大小不能超过1M！</p>
+                        <p>上传图片尺寸750*750！</p>
+                        <p>上传图片数量不超过三张！</p>
+                    </div>
                 </el-form-item>
                 <el-form-item label="图片上传：" prop="images">
                     <el-upload
