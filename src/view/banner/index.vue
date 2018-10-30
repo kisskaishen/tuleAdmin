@@ -111,9 +111,13 @@
                 })
             },
             deleteBanner(index, val) {
-                console.log(index)
-                console.log(val)
-                this.tableData.splice(index, 1)
+                this.$post('Banner/banner_del',{
+                    id:val.id
+                })
+                    .then(res=>{
+                        this.tableData.splice(index, 1)
+                        this.$message.success('删除成功~')
+                    })
             }
         }
     }
